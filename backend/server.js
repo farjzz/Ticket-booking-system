@@ -2,11 +2,18 @@ require("dotenv").config()
 const express = require('express')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/user')
+const movieRoutes = require('./routes/movieRoutes')
+const concertRoutes = require('./routes/concertRoutes')
+const trainRoutes = require('./routes/trainRoutes')
+const eventRoutes = require('./routes/eventRoutes')
 const app = express()
 
 app.use(express.json())
 app.use('/api/user', userRoutes)
-
+app.use('/api/movies', movieRoutes)
+app.use('/api/concerts', concertRoutes)
+app.use('/api/trains', trainRoutes)
+app.use('/api/events', eventRoutes)
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(process.env.PORT, () => {
