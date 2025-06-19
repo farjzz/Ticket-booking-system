@@ -26,7 +26,11 @@ const userSchema = new Schema({
         type: Number,
         required: true,
         default: 500
-    } //gotta add profile
+    },
+    profilePic: {
+        type: String,
+        default: ''
+    }
 }, { timestamps: true })
 
 userSchema.statics.signup = async function (email, password, name, role) {

@@ -1,0 +1,10 @@
+const { getProfile, editProfile, changePassword } = require('../controllers/profileController')
+const express = require('express')
+const requireAuth = require('../middleware/requireAuth')
+const upload = require('../middleware/upload')
+const router = express.Router()
+router.use(requireAuth)
+router.get('/', getProfile)
+router.patch('/', upload.single('profilePic'), editProfile)
+router.patch('/change-password', changePassword)
+module.exports = router

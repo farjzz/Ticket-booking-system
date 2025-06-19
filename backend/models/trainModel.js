@@ -38,7 +38,7 @@ const trainSchema = new Schema({
     },
     classType: {
         type: String,
-        required: true
+        required: true //gotta add enum
     },
     price: {
         type: Number,
