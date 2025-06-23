@@ -1,25 +1,27 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const movieSchema = new Schema({
-    name: {
+const theatreSchema = new Schema({
+    movie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+        required: true
+    },
+    theatre_name: {
         type: String,
         required: true
     },
-    genre: {
+    location: {
         type: String,
         required: true
     },
-    language: {
-        type: String
-    },
-    description: {
-        type: String
-    },
-    durationInMins: {
+    price: {
         type: Number,
         required: true
     },
-    //add poster
+    seatsTotal: {
+        type: Number,
+        required: true
+    },
     vendorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -27,4 +29,4 @@ const movieSchema = new Schema({
     }
 }, { timestamps: true })
 
-module.exports = mongoose.model('Movie', movieSchema)
+module.exports = mongoose.model('Theatre', theatreSchema)

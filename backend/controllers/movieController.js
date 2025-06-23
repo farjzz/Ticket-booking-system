@@ -1,12 +1,13 @@
 const Movie = require('../models/movieModel')
 
 const createMovie = async (req, res) => {
-    const { name, genre, language, description, date, time, theatre_name, location, price, seatsTotal } = req.body
+    const { name, genre, language, description, date, time, theatre_name, location, price, seatsTotal, durationInMins } = req.body
     if (req.user.role != 'vendor') {
         return res.status(403).json({ error: 'Access denied' })
     }
     let emptyFields = []
     if (!name) emptyFields.push('name')
+    if (!durationInMins) emptyFields.push('durationInMins')
     if (!genre) emptyFields.push('genre')
     if (!date) emptyFields.push('date')
     if (!time) emptyFields.push('time')

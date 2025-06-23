@@ -13,12 +13,6 @@ const Login = () => {
         <div className="login-page">
             <form className="login-form" onSubmit={handleSubmit}>
                 <h3>Login</h3>
-                <label>Role:</label>
-                <select value={role} onChange={(e) => setRole(e.target.value)}>
-                    <option value="user">User</option>
-                    <option value="vendor">Vendor</option>
-                    <option value="admin">Admin</option>
-                </select>
                 <label>Email:</label>
                 <input
                     type="email"

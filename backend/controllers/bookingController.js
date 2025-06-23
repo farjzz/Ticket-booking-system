@@ -1,6 +1,8 @@
 const Concert = require('../models/concertModel')
 const Movie = require('../models/movieModel')
 const Train = require('../models/trainModel')
+const Theatre = require('../models/theatreModel')
+const Show = require('../models/showModel')
 const Booking = require('../models/bookingModel')
 
 const bookEvent = async (req, res) => {
@@ -9,8 +11,8 @@ const bookEvent = async (req, res) => {
         return res.status(403).json({ error: 'Access denied' })
     }
     let emptyFields = []
-    if (!eventType) emptyFields.push('eventType')
-    if (!eventId) emptyFields.push('eventId')
+    // if (!eventType) emptyFields.push('eventType')
+    // if (!eventId) emptyFields.push('eventId')
     if (!seatsBooked && seatsBooked != 0) emptyFields.push('seatsBooked') //later add seatsSelected upon adding the grid
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
@@ -18,22 +20,21 @@ const bookEvent = async (req, res) => {
     if (seatsBooked <= 0) {
         return res.status(400).json({ error: 'Book atleast one seat' })
     }
-    let model
-    switch (eventType) {
-        case 'movie':
-            model = Movie
-            break
-        case 'concert':
-            model = Concert
-            break
-        case 'train':
-            model = Train
-            break
-        default:
-            return res.status(400).json({ error: 'Invalid event type' })
-    }
     try {
-        const event = await model.findById(eventId)
+        let event
+        switch (eventType) {
+            case 'movie':
+                event = await Show.findById(eventId)
+                break
+            case 'concert':
+                event = await Concert.findById(eventId)
+                break
+            case 'train':
+                event = await model.findById(eventId)
+                break
+            default:
+                return res.status(400).json({ error: 'Invalid event type' })
+        }
         if (!event) {
             return res.status(404).json({ error: 'Event not found' })
         }
@@ -71,7 +72,7 @@ const cancelBooking = async (req, res) => {
         let model
         switch (booking.eventType) {
             case 'movie':
-                model = Movie
+                model = Show
                 break
             case 'concert':
                 model = Concert

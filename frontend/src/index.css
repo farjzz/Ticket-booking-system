@@ -1,13 +1,128 @@
-body {
+.body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  background-color: black;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.home {
+  padding: 2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(103, 97, 97);
+}
+
+.event-filter {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter-icon {
+  cursor: pointer;
+}
+
+.filter-dropdown {
+  background-color: white;
+  border: solid black 1px;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  top: 8rem;
+  left: 4rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  width: 100px;
+}
+
+.filter-dropdown p {
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.categories span {
+  margin-right: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 0.5 rem;
+  border-radius: 5px;
+}
+
+.categories .active {
+  background-color: rgb(64, 64, 64);
+  color: white;
+}
+
+.events-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320, 1fr));
+  gap: 1.5rem;
+}
+
+.event-card {
+  padding: 1rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.event-card img {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: black;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.search {
+  flex: 1;
+  margin: 0 2rem;
+}
+
+.search-bar {
+  width: 90%;
+  padding: 0.5rem 1rem;
+  border: 1px solid grey;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profilePic {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-left: 2rem;
 }

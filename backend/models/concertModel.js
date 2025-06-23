@@ -39,13 +39,17 @@ const concertSchema = new Schema({
         type: Number,
         required: true
     },
+    durationInMins: {
+        type: Number,
+        //required: true
+    },
     seatsTotal: {
         type: Number,
         required: true
     },
     seatsAvailable: {
         type: Number,
-        required: true
+        //required: true
     },
     vendorId: {
         type: mongoose.Schema.Types.ObjectId,
