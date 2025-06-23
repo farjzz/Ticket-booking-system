@@ -1,6 +1,7 @@
 const Concert = require('../models/concertModel')
 const Movie = require('../models/movieModel')
 const Train = require('../models/trainModel')
+const TrainClass = require('../models/TrainClassModel')
 const Theatre = require('../models/theatreModel')
 const Show = require('../models/showModel')
 const Booking = require('../models/bookingModel')
@@ -30,7 +31,7 @@ const bookEvent = async (req, res) => {
                 event = await Concert.findById(eventId)
                 break
             case 'train':
-                event = await model.findById(eventId)
+                event = await TrainClass.findById(eventId)
                 break
             default:
                 return res.status(400).json({ error: 'Invalid event type' })
@@ -78,7 +79,7 @@ const cancelBooking = async (req, res) => {
                 model = Concert
                 break
             case 'train':
-                model = Train
+                model = TrainClass
                 break
             default:
                 return res.status(400).json({ error: 'Invalid event type' })

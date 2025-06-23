@@ -5,7 +5,6 @@ import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import Event from './pages/Event';
 import BookMovie from './pages/BookMovie';
-import BookConcert from './pages/BookConcert'
 import BookTrain from './pages/BookTrain'
 function App() {
   return (
@@ -33,10 +32,6 @@ function App() {
             <Route
               path="/bookmovie/:id"
               element={<BookMovie />}
-            />
-            <Route
-              path="/bookconcert/:id"
-              element={<BookConcert />}
             />
             <Route
               path="/booktrain/:id"

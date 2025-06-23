@@ -36,22 +36,6 @@ const trainSchema = new Schema({
         type: String,
         required: true
     },
-    classType: {
-        type: String,
-        required: true //gotta add enum
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    seatsTotal: {
-        type: Number,
-        required: true
-    },
-    seatsAvailable: {
-        type: Number,
-        required: true
-    },
     vendorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

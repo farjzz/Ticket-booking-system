@@ -18,6 +18,11 @@ const showSchema = new Schema({
     seatsAvailable: {
         type: Number,
         required: true
+    },
+    vendorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 }, { timestamps: true })
 

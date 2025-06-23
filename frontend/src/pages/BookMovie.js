@@ -13,6 +13,8 @@ const BookMovie = () => {
     const [seats, setSeats] = useState(1)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [booked, setBooked] = useState(false)
+    const [isBooking, setIsBooking] = useState(false)
     const { user } = useAuthContext()
     useEffect(() => {
         if (!user) {
@@ -21,6 +23,7 @@ const BookMovie = () => {
         }
     }, [user])
     useEffect(() => {
+        if (!user) return
         setSelectedShow(null)
         setSeats(1)
         const fetchShows = async () => {
@@ -42,8 +45,9 @@ const BookMovie = () => {
             }
         }
         fetchShows()
-    }, [selectedTheatre])
+    }, [selectedTheatre, user])
     useEffect(() => {
+        if (!user) return
         const fetchTheatres = async () => {
             try {
                 const response = await fetch(`/api/theatres?movie=${id}`, {
@@ -65,22 +69,52 @@ const BookMovie = () => {
             }
         }
         fetchTheatres()
-    }, [id])
+    }, [id, user])
     useEffect(() => {
         setSelectedTheatre(null)
         setSelectedShow(null)
         setSeats(1)
     }, [selectedCity])
-    const handleBooking = () => {
-        if (!selectedShowObj) {
+    const handleBooking = async () => {
+        setIsBooking(true)
+        setError(null)
+        if (!selectedShow) {
             setError("Please select a show")
             return
         }
-        if (selectedShowObj.seatsAvailable < seats) {
+        if (selectedShowObj?.seatsAvailable < seats) {
             setError("Not enough seats available")
             return
         }
-        //rest of the code for booking logic
+        try {
+            const response = await fetch('/api/booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({
+                    eventType: 'movie',
+                    eventId: selectedShow,
+                    seatsBooked: seats
+                })
+            })
+            const json = await response.json()
+            if (!response.ok) {
+                setError(json.error)
+            }
+            if (response.ok) {
+                setBooked(true)
+                setSelectedCity(null)
+                setSelectedShow(null)
+                setSelectedTheatre(null)
+                setSeats(1)
+                setError(null)
+            }
+        } catch (error) {
+            setError(error.message)
+        }
+        setIsBooking(false)
     }
     const theatresInCity = selectedCity ? theatres.filter(t => t.location == selectedCity) : []
     const selectedTheatreObj = theatres.find(t => t._id == selectedTheatre)
@@ -90,7 +124,7 @@ const BookMovie = () => {
     return (
         <div className="movie-booking">
             <h3>Select City</h3>
-            <select value={selectedCity} onChange={(e) => setSelectedCity(e.target.value)}>
+            <select value={selectedCity} onChange={(e) => { setSelectedCity(e.target.value); setSelectedTheatre(null); setSelectedShow(null); setSeats(1); setBooked(false); setError(null) }}>
                 <option value="">--- Choose a City ---</option>
                 {cities.map(c => (
                     <option value={c} key={c}>{c}</option>
@@ -122,7 +156,8 @@ const BookMovie = () => {
                         </>
                     )}
                     {error && <p className="error">{error}</p>}
-                    <button onClick={handleBooking} disabled={!selectedShow}>Book now</button>
+                    <button onClick={handleBooking} disabled={!selectedShow || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
+                    {booked && <p className="booked">Booking successful!</p>}
                 </>
             )}
         </div>
