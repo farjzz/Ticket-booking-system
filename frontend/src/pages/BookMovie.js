@@ -29,7 +29,7 @@ const BookMovie = () => {
         const fetchShows = async () => {
             if (!selectedTheatre) return
             try {
-                const response = await fetch(`/api/shows?theatre=${selectedTheatre}`, {
+                const response = await fetch(`/api/shows?theatre=${selectedTheatre}&movie=${id}`, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }
@@ -50,7 +50,7 @@ const BookMovie = () => {
         if (!user) return
         const fetchTheatres = async () => {
             try {
-                const response = await fetch(`/api/theatres?movie=${id}`, {
+                const response = await fetch(`/api/shows/bymovie?movie=${id}`, {
                     headers: {
                         'Authorization': `Bearer ${user.token}`
                     }
@@ -59,8 +59,9 @@ const BookMovie = () => {
                 if (!response.ok) {
                     throw Error(json.error)
                 }
-                setTheatres(json)
-                const citiesUnique = [...new Set(json.map(t => t.location))]
+                const uniqueTheatres = [...new Map(json.map(s => [s.theatre._id, s.theatre])).values()]
+                setTheatres(uniqueTheatres)
+                const citiesUnique = [...new Set(uniqueTheatres.map(t => t.location))]
                 setCities(citiesUnique)
                 setIsLoading(false)
             } catch (error) {
@@ -142,7 +143,6 @@ const BookMovie = () => {
                     </select>
                     {selectedTheatre && (
                         <>
-                            <p>Price: ₹{selectedTheatreObj.price}</p>
                             <h4>Shows</h4>
                             {shows.length == 0 && <p>No shows available</p>}
                             <select value={selectedShow} onChange={(e) => setSelectedShow(e.target.value)}>
@@ -151,12 +151,13 @@ const BookMovie = () => {
                                     <option value={s._id} key={s._id}>{new Date(s.date).toLocaleDateString()} at {s.time} ({s.seatsAvailable} seat(s) left)</option>
                                 ))}
                             </select>
+                            <p>Price: ₹{selectedShowObj?.price}</p>
                             <label>Number of seats:</label>
                             <input type="number" value={seats} min="1" max={selectedShowObj?.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
+                            <button onClick={handleBooking} disabled={!selectedShow || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
                         </>
                     )}
                     {error && <p className="error">{error}</p>}
-                    <button onClick={handleBooking} disabled={!selectedShow || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
                     {booked && <p className="booked">Booking successful!</p>}
                 </>
             )}

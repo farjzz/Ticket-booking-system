@@ -7,7 +7,8 @@ const trainSchema = new Schema({
     },
     number: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     source: {
         type: String,

@@ -1,7 +1,7 @@
 const Train = require('../models/trainModel')
 
 const createTrain = async (req, res) => {
-    const { name, number, source, destination, description, departureDate, departureTime, arrivalDate, arrivalTime, classType, price, seatsTotal } = req.body
+    const { name, number, source, destination, description, departureDate, departureTime, arrivalDate, arrivalTime } = req.body
     if (req.user.role != 'vendor') {
         return res.status(403).json({ error: 'Access denied' })
     }
@@ -14,18 +14,31 @@ const createTrain = async (req, res) => {
     if (!departureTime) emptyFields.push('departureTime')
     if (!arrivalDate) emptyFields.push('arrivalDate')
     if (!arrivalTime) emptyFields.push('arrivalTime')
-    if (!classType) emptyFields.push('classType')
-    if (!price) emptyFields.push('price')
-    if (!seatsTotal) emptyFields.push('seatsTotal')
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
     try {
-        const train = await Train.create({ name, number, source, destination, description, departureDate, departureTime, arrivalDate, arrivalTime, classType, price, seatsTotal, seatsAvailable: seatsTotal, vendorId: req.user._id })
+        const train = await Train.create({ name, number, source, destination, description, departureDate, departureTime, arrivalDate, arrivalTime, vendorId: req.user._id })
         res.status(201).json(train)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-module.exports = { createTrain }
+const deleteTrain = async (req, res) => {
+    const { id } = req.params
+    if (req.user.role != 'vendor') {
+        return res.status(403).json({ error: 'Access denied' })
+    }
+    try {
+        const response = await Train.findOneAndDelete({ _id: id, vendorId: req.user._id })
+        if (!response) {
+            return res.status(404).json({ error: 'Train not found' })
+        }
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+module.exports = { createTrain, deleteTrain }

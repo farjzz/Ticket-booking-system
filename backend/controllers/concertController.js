@@ -26,4 +26,20 @@ const createConcert = async (req, res) => {
     }
 }
 
+const deleteConcert = async (req, res) => {
+    const { id } = req.params
+    if (req.user.role != 'vendor') {
+        return res.status(403).json({ error: 'Access denied' })
+    }
+    try {
+        const response = await Concert.findOneAndDelete({ _id: id, vendorId: req.user._id })
+        if (!response) {
+            return res.status(404).json({ error: 'Concert not found' })
+        }
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
 module.exports = { createConcert }

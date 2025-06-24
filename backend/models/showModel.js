@@ -7,6 +7,11 @@ const showSchema = new Schema({
         ref: 'Theatre',
         required: true
     },
+    movie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+        required: true
+    },
     date: {
         type: Date,
         required: true
@@ -16,6 +21,10 @@ const showSchema = new Schema({
         required: true
     },
     seatsAvailable: {
+        type: Number,
+        required: true
+    },
+    price: {
         type: Number,
         required: true
     },

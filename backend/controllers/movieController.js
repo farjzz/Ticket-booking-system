@@ -1,7 +1,7 @@
 const Movie = require('../models/movieModel')
 
 const createMovie = async (req, res) => {
-    const { name, genre, language, description, date, time, theatre_name, location, price, seatsTotal, durationInMins } = req.body
+    const { name, genre, language, description, durationInMins } = req.body
     if (req.user.role != 'vendor') {
         return res.status(403).json({ error: 'Access denied' })
     }
@@ -9,21 +9,32 @@ const createMovie = async (req, res) => {
     if (!name) emptyFields.push('name')
     if (!durationInMins) emptyFields.push('durationInMins')
     if (!genre) emptyFields.push('genre')
-    if (!date) emptyFields.push('date')
-    if (!time) emptyFields.push('time')
-    if (!theatre_name) emptyFields.push('theatre_name')
-    if (!location) emptyFields.push('location')
-    if (!price) emptyFields.push('price')
-    if (!seatsTotal) emptyFields.push('seatsTotal')
+    if (!language) emptyFields.push('language')
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
     try {
-        const movie = await Movie.create({ name, genre, language, description, date, time, theatre_name, location, price, seatsTotal, seatsAvailable: seatsTotal, vendorId: req.user._id })
+        const movie = await Movie.create({ name, genre, language, description, durationInMins, vendorId: req.user._id })
         res.status(201).json(movie)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
-module.exports = { createMovie }
+const deleteMovie = async (req, res) => {
+    const { id } = req.params
+    if (req.user.role != 'vendor') {
+        return res.status(403).json({ error: 'Access denied' })
+    }
+    try {
+        const response = await Movie.findOneAndDelete({ _id: id, vendorId: req.user._id })
+        if (!response) {
+            return res.status(404).json({ error: 'Movie not found' })
+        }
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+module.exports = { createMovie, deleteMovie }

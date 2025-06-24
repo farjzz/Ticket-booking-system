@@ -6,6 +6,8 @@ import Navbar from './components/Navbar'
 import Event from './pages/Event';
 import BookMovie from './pages/BookMovie';
 import BookTrain from './pages/BookTrain'
+import CreateEvent from './pages/CreateEvent'
+import ViewEvents from './pages/ViewEvents'
 function App() {
   return (
     <div className="App">
@@ -37,6 +39,14 @@ function App() {
               path="/booktrain/:id"
               element={<BookTrain />}
             />
+            {/* <Route
+              path="/create-event"
+              element={<CreateEvent />}
+            />
+            <Route
+              path="/view-events"
+              element={<ViewEvents />}
+            /> */}
           </Routes>
         </div>
       </BrowserRouter>
