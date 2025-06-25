@@ -8,12 +8,13 @@ const bookingSchema = new Schema({
     },
     eventType: {
         type: String,
-        enum: ['movie', 'concert', 'train'],
+        enum: ['Show', 'Concert', 'TrainClass'],
         required: true
     },
     eventId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        refPath: 'eventType'
     },
     seatsBooked: {
         type: Number,

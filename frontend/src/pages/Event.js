@@ -48,7 +48,7 @@ const Event = () => {
                     'Authorization': `Bearer ${user.token}`
                 },
                 body: JSON.stringify({
-                    eventType: 'concert',
+                    eventType: 'Concert',
                     eventId: event._id,
                     seatsBooked: seats
                 })
@@ -73,7 +73,7 @@ const Event = () => {
     const mins = event.durationInMins % 60
     return (
         <div className="event-details-pg">
-            {event.eventType == 'movie' && (
+            {event.eventType == 'Show' && (
                 <>
                     <img src={`/uploads/${event.poster}`} alt={event.name} />
                     <div className="details">
@@ -90,7 +90,7 @@ const Event = () => {
                     </Link>
                 </>
             )}
-            {event.eventType == 'concert' && (
+            {event.eventType == 'Concert' && (
                 <>
                     <img src={`/uploads/${event.poster}`} alt={event.name} />
                     <div className="details">
@@ -109,11 +109,14 @@ const Event = () => {
                     <p>{event.description}</p>
                     <label>Number of seats:</label>
                     <input type="number" value={seats} min="1" max={event.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
+                    {/* <Link to="/booking-summary">
+                        <button>Proceed to booking</button>
+                    </Link> */}
                     <button className="book-btn" onClick={handleBooking} disabled={isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
                     {booked && <p className="booked">Booking successful!</p>}
                 </>
             )}
-            {event.eventType == 'train' && (
+            {event.eventType == 'TrainClass' && (
                 <div className="details">
                     <p>{event.number}</p>
                     <h2>{event.name}</h2>

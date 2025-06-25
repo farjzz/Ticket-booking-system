@@ -22,20 +22,10 @@ const bookEvent = async (req, res) => {
         return res.status(400).json({ error: 'Book atleast one seat' })
     }
     try {
-        let event
-        switch (eventType) {
-            case 'movie':
-                event = await Show.findById(eventId)
-                break
-            case 'concert':
-                event = await Concert.findById(eventId)
-                break
-            case 'train':
-                event = await TrainClass.findById(eventId)
-                break
-            default:
-                return res.status(400).json({ error: 'Invalid event type' })
-        }
+        const modelMap = { Show, Concert, TrainClass }
+        const Model = modelMap[eventType]
+        if (!Model) return res.status(400).json({ error: 'Invalid event type' })
+        const event = await Model.findById(eventId)
         if (!event) {
             return res.status(404).json({ error: 'Event not found' })
         }
@@ -53,7 +43,17 @@ const bookEvent = async (req, res) => {
 
 const getBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find({ userId: req.user._id }).sort({ createdAt: -1 })
+        let bookings = await Booking.find({ userId: req.user._id }).sort({ createdAt: -1 }).populate('eventId')
+        bookings = await Promise.all(bookings.map(async (b) => {
+            if (!b.eventId) return b;
+            if (b.eventType === 'Show') {
+                await b.eventId.populate('movie');
+            }
+            else if (b.eventType === 'TrainClass') {
+                await b.eventId.populate('train');
+            }
+            return b;
+        }))
         res.status(200).json(bookings)
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -70,21 +70,10 @@ const cancelBooking = async (req, res) => {
         if (booking.userId.toString() !== req.user._id.toString()) {
             return res.status(403).json({ error: 'Unauthorized user' })
         }
-        let model
-        switch (booking.eventType) {
-            case 'movie':
-                model = Show
-                break
-            case 'concert':
-                model = Concert
-                break
-            case 'train':
-                model = TrainClass
-                break
-            default:
-                return res.status(400).json({ error: 'Invalid event type' })
-        }
-        const event = await model.findById(booking.eventId)
+        const modelMap = { Show, Concert, TrainClass }
+        const Model = modelMap[eventType]
+        if (!Model) return res.status(400).json({ error: 'Invalid event type' })
+        const event = await Model.findById(booking.eventId)
         if (event) {
             event.seatsAvailable += booking.seatsBooked
             await event.save()

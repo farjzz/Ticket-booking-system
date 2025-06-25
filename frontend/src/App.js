@@ -6,6 +6,10 @@ import Navbar from './components/Navbar'
 import Event from './pages/Event';
 import BookMovie from './pages/BookMovie';
 import BookTrain from './pages/BookTrain'
+import ChangePassword from './pages/ChangePassword'
+import Bookings from './pages/Bookings'
+import EditProfile from './pages/EditProfile'
+import BookingSummary from './pages/BookingSummary'
 import CreateEvent from './pages/CreateEvent'
 import ViewEvents from './pages/ViewEvents'
 function App() {
@@ -47,6 +51,22 @@ function App() {
               path="/view-events"
               element={<ViewEvents />}
             /> */}
+            <Route
+              path="/edit-profile"
+              element={<EditProfile />}
+            />
+            <Route
+              path="/bookings"
+              element={<Bookings />}
+            />
+            <Route
+              path="/change-password"
+              element={<ChangePassword />}
+            />
+            <Route
+              path="/booking-summary"
+              element={<BookingSummary />}
+            />
           </Routes>
         </div>
       </BrowserRouter>

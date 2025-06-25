@@ -95,7 +95,7 @@ const BookMovie = () => {
                     'Authorization': `Bearer ${user.token}`
                 },
                 body: JSON.stringify({
-                    eventType: 'movie',
+                    eventType: 'Show',
                     eventId: selectedShow,
                     seatsBooked: seats
                 })
@@ -151,10 +151,15 @@ const BookMovie = () => {
                                     <option value={s._id} key={s._id}>{new Date(s.date).toLocaleDateString()} at {s.time} ({s.seatsAvailable} seat(s) left)</option>
                                 ))}
                             </select>
-                            <p>Price: ₹{selectedShowObj?.price}</p>
-                            <label>Number of seats:</label>
-                            <input type="number" value={seats} min="1" max={selectedShowObj?.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
-                            <button onClick={handleBooking} disabled={!selectedShow || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
+                            {selectedShow && (
+                                <>
+                                    <p>Price: ₹{selectedShowObj?.price}</p>
+                                    <label>Number of seats:</label>
+                                    <input type="number" value={seats} min="1" max={selectedShowObj?.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
+                                    <p>Total cost: ₹{selectedShowObj?.price * seats} </p>
+                                    <button onClick={handleBooking} disabled={!selectedShow || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
+                                </>
+                            )}
                         </>
                     )}
                     {error && <p className="error">{error}</p>}

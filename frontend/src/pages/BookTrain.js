@@ -59,7 +59,7 @@ const BookTrain = () => {
                     'Authorization': `Bearer ${user.token}`
                 },
                 body: JSON.stringify({
-                    eventType: 'train',
+                    eventType: 'TrainClass',
                     eventId: selectedClass,
                     seatsBooked: seats
                 })

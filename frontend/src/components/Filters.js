@@ -20,13 +20,13 @@ const EventFilter = ({ selectedCategory, setSelectedCategory }) => {
                 </div>
             )}
             <div className="categories">
-                <span className={selectedCategory == 'movie' ? 'active' : ''} onClick={() => handleClick('movie')}>
+                <span className={selectedCategory == 'Show' ? 'active' : ''} onClick={() => handleClick('movie')}>
                     Movies
                 </span>
-                <span className={selectedCategory == 'concert' ? 'active' : ''} onClick={() => handleClick('concert')}>
+                <span className={selectedCategory == 'Concert' ? 'active' : ''} onClick={() => handleClick('concert')}>
                     Concerts
                 </span>
-                <span className={selectedCategory == 'train' ? 'active' : ''} onClick={() => handleClick('train')}>
+                <span className={selectedCategory == 'TrainClass' ? 'active' : ''} onClick={() => handleClick('train')}>
                     Trains
                 </span>
             </div>

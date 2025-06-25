@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
+import AccTab from './Account'
 const Navbar = () => {
     const { user } = useAuthContext()
+    const [showAccTab, setShowAccTab] = useState(false)
+    const toggleAccTab = () => setShowAccTab(true)
     return (
         <header className="navbar">
             <div className="nav-logo">
@@ -19,7 +23,8 @@ const Navbar = () => {
                 )}
                 {user && (
                     <div className="profile">
-                        <img src={user.profilePic ? `/uploads/${user.profilePic}` : '/uploads/default-avatar.png'} alt="profile" className="profilePic" />
+                        <img src={user.profilePic ? `/uploads/${user.profilePic}` : '/uploads/default-avatar.png'} alt="profile" className="profilePic" onClick={toggleAccTab} />
+                        {showAccTab && <AccTab />}
                     </div>
                 )}
             </div>

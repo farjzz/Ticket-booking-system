@@ -4,7 +4,7 @@ const EventCard = ({ event }) => {
     return (
         <Link to={`/events/${event._id}`} className='event-link'>
             <div className="event-card">
-                {event.eventType == 'movie' && (
+                {event.eventType == 'Show' && (
                     <div className="movie-card">
                         <img src="{`/uploads/${event.poster}`}" alt="movie-poster" />
                         <div className="event-details">
@@ -14,7 +14,7 @@ const EventCard = ({ event }) => {
                         </div>
                     </div>
                 )}
-                {event.eventType == 'concert' && (
+                {event.eventType == 'Concert' && (
                     <div className="concert-card">
                         <img src="{`/uploads/${event.poster}`}" alt="concert-poster" />
                         <div className="event-details">
@@ -25,7 +25,7 @@ const EventCard = ({ event }) => {
                         </div>
                     </div>
                 )}
-                {event.eventType == 'train' && (
+                {event.eventType == 'TrainClass' && (
                     <div className="train-card">
                         <div className="train-left">
                             <p>{event.number}</p>

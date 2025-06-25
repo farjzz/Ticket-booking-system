@@ -1,8 +1,9 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const createToken = (_id) => {
-    //change expires in after if needed
+    //change expires in after if needed.. why is this not exported??
     return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' })
 }
 const loginUser = async (req, res) => {
@@ -25,4 +26,5 @@ const signupUser = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+
 module.exports = { loginUser, signupUser }
