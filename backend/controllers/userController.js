@@ -2,6 +2,7 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
+const sendEmail = require('../utils/sendEmail')
 
 const createToken = (_id) => {
     //change expires in after if needed
@@ -36,8 +37,15 @@ const forgotPassword = async (req, res) => {
     user.resetToken = token
     user.resetTokenExpiry = Date.now() + 1000 * 60 * 20
     await user.save()
-    console.log(`Reset link: http://localhost:3000/reset-password/${token}`)
-    res.status(200).json({ message: 'Reset link is sent to email' })
+    const resetLink = `http://localhost:3000/reset-password/${token}`
+    const message = `Click on this link to reset your password.\nhttp://localhost:3000/reset-password/${token}\nIf you did not request for a password reset, you can ignore this email`
+    try {
+        await sendEmail(email, 'Reset your password - BookItAll', message)
+        res.status(200).json({ message: 'Reset link is sent to email' })
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to send email. Try again later.' })
+    }
+    //console.log(`Reset link: http://localhost:3000/reset-password/${token}`)
 }
 
 const resetPassword = async (req, res) => {
