@@ -71,7 +71,7 @@ const cancelBooking = async (req, res) => {
             return res.status(403).json({ error: 'Unauthorized user' })
         }
         const modelMap = { Show, Concert, TrainClass }
-        const Model = modelMap[eventType]
+        const Model = modelMap[booking.eventType]
         if (!Model) return res.status(400).json({ error: 'Invalid event type' })
         const event = await Model.findById(booking.eventId)
         if (event) {

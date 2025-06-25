@@ -11,6 +11,8 @@ import Bookings from './pages/Bookings'
 import EditProfile from './pages/EditProfile'
 import BookingSummary from './pages/BookingSummary'
 import ViewBooking from './pages/ViewBooking';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import CreateEvent from './pages/CreateEvent'
 import ViewEvents from './pages/ViewEvents'
 function App() {
@@ -72,6 +74,14 @@ function App() {
               path="/view-booking"
               element={<ViewBooking />}
             />
+            <Route
+              path="/reset-password/:token"
+              element={<ResetPassword />}
+            />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPassword />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
@@ -79,4 +89,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
