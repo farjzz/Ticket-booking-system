@@ -67,10 +67,12 @@ const Event = () => {
                         <p>{event.language}</p>
                         <p>{event.venue},{event.location}</p>
                         <p>Seats left: {event.seatsAvailable}</p>
+                        <p>Price: ₹{event.price}</p>
                     </div>
                     <p>{event.description}</p>
                     <label>Number of seats:</label>
                     <input type="number" value={seats} min="1" max={event.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
+                    <p>Total cost: ₹{event.price * seats} </p>
                     <button className="book-btn" onClick={() => navigate('/booking-summary', {
                         state: { event, eventType: 'Concert', seatsBooked: seats, seatsSelected: '' }
                     })}>Proceed to booking</button>
@@ -80,8 +82,8 @@ const Event = () => {
                 <div className="details">
                     <p>{event.number}</p>
                     <h2>{event.name}</h2>
-                    <p>Source: {event.source} {event.departureDate} {event.departureTime}</p>
-                    <p>Destination: {event.destination} {event.arrivalDate} {event.arrivalTime}</p>
+                    <p>Source: {event.source} {event.departureDate.slice(0, 10)} {event.departureTime}</p>
+                    <p>Destination: {event.destination} {event.arrivalDate.slice(0, 10)} {event.arrivalTime}</p>
                     <p>{event.description}</p>
                     <Link to={`/booktrain/${event._id}`}>
                         <button className="book-btn">Proceed to booking</button>

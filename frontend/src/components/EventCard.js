@@ -33,13 +33,11 @@ const EventCard = ({ event }) => {
                         </div>
                         <div className="train-right">
                             <div className="src">
-                                <span>{event.departureDate}</span>
-                                <span>{event.departureTime}</span>
+                                <p>{event.departureDate.slice(0, 10)} at {event.departureTime}</p>
                                 <p>{event.source}</p>
                             </div>
                             <div className="dest">
-                                <span>{event.arrivalDate}</span>
-                                <span>{event.arrivalTime}</span>
+                                <p>{event.arrivalDate.slice(0, 10)} at {event.arrivalTime}</p>
                                 <p>{event.destination}</p>
                             </div>
                         </div>

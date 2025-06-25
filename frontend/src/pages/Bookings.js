@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { useAuthContext } from "../hooks/useAuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Bookings = () => {
+    const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(null)
     const [bookings, setBookings] = useState([])
     const [error, setError] = useState(null)
@@ -59,12 +60,14 @@ const Bookings = () => {
                 b.eventId ? (
                     <div key={b._id} className="a-booking">
                         {/* <Link to={`/booking-summary`}> */}
-                        <div className="booking-card">
+                        <div className="booking-card" onClick={() => navigate('/view-booking', {
+                            state: { b }
+                        })}>
                             {b.eventType == 'Show' && <p>{b.eventId.movie.name}</p>}
                             {b.eventType == 'Concert' && <p>{b.eventId.name}</p>}
                             {b.eventType == 'TrainClass' && <p>{b.eventId.train.name}</p>}
                             <p>{b.seatsBooked} seat(s) booked</p>
-                            <p>Booked on {new Date(b.createdAt).toLocaleString()}</p>
+                            <p>Booked on {new Date(b.createdAt).toDateString()}</p>
                         </div>
                         {/* </Link> */}
                         {cancelledIds.has(b._id) ? (

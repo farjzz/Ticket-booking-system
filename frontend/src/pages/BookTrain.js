@@ -59,6 +59,7 @@ const BookTrain = () => {
                     <p>Price: ₹{selectedClassObj?.price}</p>
                     <label>Number of seats:</label>
                     <input type="number" value={seats} min="1" max={selectedClassObj?.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
+                    <p>Total cost: ₹{selectedClassObj?.price * seats} </p>
                     <button className="book-btn" onClick={() => navigate('/booking-summary', {
                         state: { event: selectedClassObj, eventType: 'TrainClass', seatsBooked: seats, seatsSelected: '' }
                     })}>Proceed to booking</button>

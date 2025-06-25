@@ -10,6 +10,7 @@ import ChangePassword from './pages/ChangePassword'
 import Bookings from './pages/Bookings'
 import EditProfile from './pages/EditProfile'
 import BookingSummary from './pages/BookingSummary'
+import ViewBooking from './pages/ViewBooking';
 import CreateEvent from './pages/CreateEvent'
 import ViewEvents from './pages/ViewEvents'
 function App() {
@@ -66,6 +67,10 @@ function App() {
             <Route
               path="/booking-summary"
               element={<BookingSummary />}
+            />
+            <Route
+              path="/view-booking"
+              element={<ViewBooking />}
             />
           </Routes>
         </div>
