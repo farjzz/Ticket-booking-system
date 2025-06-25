@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const BookTrain = () => {
+    const navigate = useNavigate()
     const { id } = useParams()
     const [classes, setClasses] = useState([])
     const [selectedClass, setSelectedClass] = useState(null)
@@ -40,45 +41,6 @@ const BookTrain = () => {
         }
         fetchClass()
     }, [id, user])
-    const handleBooking = async () => {
-        setIsBooking(true)
-        setError(null)
-        if (!selectedClass) {
-            setError("Please select a class")
-            return
-        }
-        if (selectedClassObj?.seatsAvailable < seats) {
-            setError("Not enough seats available")
-            return
-        }
-        try {
-            const response = await fetch('/api/booking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
-                },
-                body: JSON.stringify({
-                    eventType: 'TrainClass',
-                    eventId: selectedClass,
-                    seatsBooked: seats
-                })
-            })
-            const json = await response.json()
-            if (!response.ok) {
-                setError(json.error)
-            }
-            if (response.ok) {
-                setBooked(true)
-                setSelectedClass(null)
-                setSeats(1)
-                setError(null)
-            }
-        } catch (error) {
-            setError(error.message)
-        }
-        setIsBooking(false)
-    }
     const selectedClassObj = classes.find(c => c._id == selectedClass)
     if (isLoading) return <p>Loading...</p>
     if (error) return <p className="error">{error}</p>
@@ -97,11 +59,12 @@ const BookTrain = () => {
                     <p>Price: ₹{selectedClassObj?.price}</p>
                     <label>Number of seats:</label>
                     <input type="number" value={seats} min="1" max={selectedClassObj?.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
+                    <button className="book-btn" onClick={() => navigate('/booking-summary', {
+                        state: { event: selectedClassObj, eventType: 'TrainClass', seatsBooked: seats, seatsSelected: '' }
+                    })}>Proceed to booking</button>
                 </>
             )}
             {error && <p className="error">{error}</p>}
-            <button onClick={handleBooking} disabled={!selectedClass || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
-            {booked && <p className="booked">Booking successful!</p>}
         </div>
     )
 }

@@ -40,5 +40,14 @@ const deleteTrain = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+const getTrain = async (req, res) => {
+    const { id } = req.params
+    try {
+        const event = await Train.findById(id)
+        return res.status(200).json({ ...event.toObject() })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
 
-module.exports = { createTrain, deleteTrain }
+module.exports = { createTrain, deleteTrain, getTrain }

@@ -1,8 +1,9 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Event = () => {
+    const navigate = useNavigate()
     const { id } = useParams()
     const { user } = useAuthContext()
     const [event, setEvent] = useState(null)
@@ -10,8 +11,6 @@ const Event = () => {
     const [seats, setSeats] = useState(1)
     const [trainClass, setTrainClass] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
-    const [booked, setBooked] = useState(false)
-    const [isBooking, setIsBooking] = useState(false)
     useEffect(() => {
         const fetchEvent = async () => {
             try {
@@ -29,43 +28,6 @@ const Event = () => {
         }
         fetchEvent()
     }, [id])
-    const handleBooking = async () => {
-        setError(null)
-        if (!user) {
-            setError("You must be logged in") //redirect to login page from app.js later
-            return
-        }
-        if (event.seatsAvailable < seats) {
-            setError("Not enough seats available")
-            return
-        }
-        setIsBooking(true)
-        try {
-            const response = await fetch('/api/booking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
-                },
-                body: JSON.stringify({
-                    eventType: 'Concert',
-                    eventId: event._id,
-                    seatsBooked: seats
-                })
-            })
-            const json = await response.json()
-            if (!response.ok) {
-                setError(json.error)
-            }
-            if (response.ok) {
-                setBooked(true)
-                setError(null)
-            }
-        } catch (error) {
-            setError(error.message)
-        }
-        setIsBooking(false)
-    }
     if (isLoading) return <div>Loading...</div>
     if (error) return <div className="error">{error}</div>
     if (!event) return <div className="error">Event not found</div>
@@ -109,11 +71,9 @@ const Event = () => {
                     <p>{event.description}</p>
                     <label>Number of seats:</label>
                     <input type="number" value={seats} min="1" max={event.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
-                    {/* <Link to="/booking-summary">
-                        <button>Proceed to booking</button>
-                    </Link> */}
-                    <button className="book-btn" onClick={handleBooking} disabled={isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
-                    {booked && <p className="booked">Booking successful!</p>}
+                    <button className="book-btn" onClick={() => navigate('/booking-summary', {
+                        state: { event, eventType: 'Concert', seatsBooked: seats, seatsSelected: '' }
+                    })}>Proceed to booking</button>
                 </>
             )}
             {event.eventType == 'TrainClass' && (

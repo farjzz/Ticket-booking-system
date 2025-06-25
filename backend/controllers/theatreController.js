@@ -45,4 +45,14 @@ const deleteTheatre = async (req, res) => {
     }
 }
 
-module.exports = { getTheatres, createTheatre, deleteTheatre }
+const getTheatre = async (req, res) => {
+    const { id } = req.params
+    try {
+        const event = await Theatre.findById(id)
+        return res.status(200).json({ ...event.toObject() })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+module.exports = { getTheatres, createTheatre, deleteTheatre, getTheatre }

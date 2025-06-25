@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const BookMovie = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [theatres, setTheatres] = useState([])
     const [cities, setCities] = useState([])
     const [shows, setShows] = useState([])
@@ -76,47 +77,6 @@ const BookMovie = () => {
         setSelectedShow(null)
         setSeats(1)
     }, [selectedCity])
-    const handleBooking = async () => {
-        setIsBooking(true)
-        setError(null)
-        if (!selectedShow) {
-            setError("Please select a show")
-            return
-        }
-        if (selectedShowObj?.seatsAvailable < seats) {
-            setError("Not enough seats available")
-            return
-        }
-        try {
-            const response = await fetch('/api/booking', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.token}`
-                },
-                body: JSON.stringify({
-                    eventType: 'Show',
-                    eventId: selectedShow,
-                    seatsBooked: seats
-                })
-            })
-            const json = await response.json()
-            if (!response.ok) {
-                setError(json.error)
-            }
-            if (response.ok) {
-                setBooked(true)
-                setSelectedCity(null)
-                setSelectedShow(null)
-                setSelectedTheatre(null)
-                setSeats(1)
-                setError(null)
-            }
-        } catch (error) {
-            setError(error.message)
-        }
-        setIsBooking(false)
-    }
     const theatresInCity = selectedCity ? theatres.filter(t => t.location == selectedCity) : []
     const selectedTheatreObj = theatres.find(t => t._id == selectedTheatre)
     const selectedShowObj = shows.find(s => s._id == selectedShow)
@@ -157,13 +117,14 @@ const BookMovie = () => {
                                     <label>Number of seats:</label>
                                     <input type="number" value={seats} min="1" max={selectedShowObj?.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
                                     <p>Total cost: ₹{selectedShowObj?.price * seats} </p>
-                                    <button onClick={handleBooking} disabled={!selectedShow || booked || isBooking}>{isBooking ? "Booking..." : "Book now"}</button>
+                                    <button className="book-btn" onClick={() => navigate('/booking-summary', {
+                                        state: { event: selectedShowObj, eventType: 'Show', seatsBooked: seats, seatsSelected: '' }
+                                    })}>Proceed to booking</button>
                                 </>
                             )}
                         </>
                     )}
                     {error && <p className="error">{error}</p>}
-                    {booked && <p className="booked">Booking successful!</p>}
                 </>
             )}
         </div>
