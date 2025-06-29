@@ -1,3 +1,4 @@
+const { get } = require('mongoose')
 const Concert = require('../models/concertModel')
 
 const createConcert = async (req, res) => {
@@ -41,5 +42,14 @@ const deleteConcert = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 }
+const getConcert = async (req, res) => {
+    const { id } = req.params
+    try {
+        const event = await Concert.findById(id)
+        return res.status(200).json({ ...event.toObject() })
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
 
-module.exports = { createConcert }
+module.exports = { createConcert, deleteConcert, getConcert }

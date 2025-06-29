@@ -16,7 +16,7 @@ const getProfile = async (req, res) => {
 
 const editProfile = async (req, res) => {
     const { name, email } = req.body
-    const profilePic = req.file ? req.file.filename : undefined
+    const profilePic = req.file ? `/uploads/${req.file.filename}` : undefined
     try {
         const user = await User.findById(req.user._id)
         if (!user) {

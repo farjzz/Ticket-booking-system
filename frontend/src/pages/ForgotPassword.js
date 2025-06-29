@@ -26,11 +26,13 @@ const ForgotPassword = () => {
     }
     return (
         <div className="forgot-password">
-            <h2>Forgot password</h2>
+            <h3>Forgot password</h3>
             <form onSubmit={handleSubmit}>
-                <label>Email:</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                <button type="submit">Send Reset Link</button>
+                <div className="forgot-password-details">
+                    <label>Email:</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <button type="submit" className="reset-password-btn">Send Reset Link</button>
             </form>
             {message && <p>{message}</p>}
             {error && <p className="error">{error}</p>}

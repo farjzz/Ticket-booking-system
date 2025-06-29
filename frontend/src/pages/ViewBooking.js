@@ -33,48 +33,48 @@ const ViewBooking = () => {
     }
     return (
         <div className="view-booking">
-            <h2>Booking Details</h2>
+            <h3>Booking Details</h3>
             {b.eventType == 'Show' && (
-                <>
-                    <p><strong>Movie:</strong>{b.eventId.movie.name}</p>
-                    <p><strong>Genre:</strong>{b.eventId.movie.genre}</p>
-                    <p><strong>Theatre:</strong>{b.eventId.theatre.theatre_name}, {b.eventId.theatre.location}</p>
-                    <p><strong>Date:</strong>{new Date(b.eventId.date).toDateString()}</p>
-                    <p><strong>Time:</strong>{b.time}</p>
-                    <p><strong>Price per ticket:</strong>{b.eventId.price}</p>
-                    <p><strong>Number of seats booked:</strong>{b.seatsBooked}</p>
-                    <p><strong>Total price:</strong>{b.eventId.price * b.seatsBooked}</p>
-                </>
+                <div>
+                    <p><em>Movie: </em>{b.eventId.movie.name}</p>
+                    <p><em>Genre: </em>{b.eventId.movie.genre}</p>
+                    <p><em>Theatre: </em>{b.eventId.theatre.theatre_name}, {b.eventId.theatre.location}</p>
+                    <p><em>Date: </em>{new Date(b.eventId.date).toDateString()}</p>
+                    <p><em>Time: </em>{b.eventId.time}</p>
+                    <p><em>Price per ticket: </em>₹{b.eventId.price}</p>
+                    <p><em>Number of seats booked: </em>{b.seatsBooked}</p>
+                    <p><em>Total price: </em>₹{b.eventId.price * b.seatsBooked}</p>
+                </div>
             )}
             {b.eventType == 'Concert' && (
-                <>
-                    <p><strong>Concert:</strong>{b.eventId.name}</p>
-                    <p><strong>Genre:</strong>{b.eventId.genre}</p>
-                    <p><strong>Artist(s):</strong>{b.eventId.artist}</p>
-                    <p><strong>Date:</strong>{new Date(b.eventId.date).toDateString()}</p>
-                    <p><strong>Time:</strong>{b.eventId.time}</p>
-                    <p><strong>Venue:</strong>{b.eventId.venue}, {b.eventId.location}</p>
-                    <p><strong>Price per ticket:</strong>{b.eventId.price}</p>
-                    <p><strong>Number of seats booked:</strong>{b.seatsBooked}</p>
-                    <p><strong>Total price:</strong>{b.eventId.price * b.seatsBooked}</p>
-                </>
+                <div>
+                    <p><em>Concert: </em>{b.eventId.name}</p>
+                    <p><em>Genre: </em>{b.eventId.genre}</p>
+                    <p><em>Artist(s): </em>{b.eventId.artist}</p>
+                    <p><em>Date: </em>{new Date(b.eventId.date).toDateString()}</p>
+                    <p><em>Time: </em>{b.eventId.time}</p>
+                    <p><em>Venue: </em>{b.eventId.venue}, {b.eventId.location}</p>
+                    <p><em>Price per ticket: </em>₹{b.eventId.price}</p>
+                    <p><em>Number of seats booked: </em>{b.seatsBooked}</p>
+                    <p><em>Total price: </em>₹{b.eventId.price * b.seatsBooked}</p>
+                </div>
             )}
             {b.eventType == 'TrainClass' && (
-                <>
+                <div>
                     <p><strong>{b.eventId.train.number} {b.eventId.train.name}</strong></p>
-                    <p><strong>Source:</strong>{b.eventId.train.source}</p>
-                    <p><strong>Destination:</strong>{b.eventId.train.destination}</p>
-                    <p><strong>Departure Date:</strong>{new Date(b.eventId.train.departureDate).toDateString()}</p>
-                    <p><strong>Departure Time:</strong>{b.eventId.train.departureTime}</p>
-                    <p><strong>Arrival Date:</strong>{new Date(b.eventId.train.arrivalDate).toDateString()}</p>
-                    <p><strong>Arrival Time:</strong>{b.eventId.train.arrivalTime}</p>
-                    <p><strong>Class:</strong>{b.eventId.classType}</p>
-                    <p><strong>Price per ticket:</strong>{b.eventId.price}</p>
-                    <p><strong>Number of seats booked:</strong>{b.seatsBooked}</p>
-                    <p><strong>Total price:</strong>{b.eventId.price * b.seatsBooked}</p>
-                </>
+                    <p><em>Source: </em>{b.eventId.train.source}</p>
+                    <p><em>Destination: </em>{b.eventId.train.destination}</p>
+                    <p><em>Departure Date: </em>{new Date(b.eventId.train.departureDate).toDateString()}</p>
+                    <p><em>Departure Time: </em>{b.eventId.train.departureTime}</p>
+                    <p><em>Arrival Date: </em>{new Date(b.eventId.train.arrivalDate).toDateString()}</p>
+                    <p><em>Arrival Time: </em>{b.eventId.train.arrivalTime}</p>
+                    <p><em>Class: </em>{b.eventId.classType}</p>
+                    <p><em>Price per ticket: </em>₹{b.eventId.price}</p>
+                    <p><em>Number of seats booked: </em>{b.seatsBooked}</p>
+                    <p><em>Total price: </em>₹{b.eventId.price * b.seatsBooked}</p>
+                </div>
             )}
-            <button onClick={() => cancelBooking(b._id)} disabled={isLoading}>{isLoading ? 'Cancelling...' : 'Cancel Booking'}</button>
+            <button onClick={() => cancelBooking(b._id)} disabled={isLoading} className="cancel-btn">{isLoading ? 'Cancelling...' : 'Cancel Booking'}</button>
             {error && <p className="error">{error}</p>}
             {success && (
                 <>

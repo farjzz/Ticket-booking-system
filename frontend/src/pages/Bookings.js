@@ -10,6 +10,15 @@ const Bookings = () => {
     const [cancelledIds, setCancelledIds] = useState(new Set())
     const { user } = useAuthContext()
     useEffect(() => {
+        if (!user) {
+            setError('You must be logged in to view your bookings')
+            setIsLoading(false)
+            setTimeout(() => {
+                navigate('/login')
+            }, 2000)
+        }
+    }, [user])
+    useEffect(() => {
         if (!user) return
         const fetchBookings = async () => {
             setIsLoading(true)
@@ -32,56 +41,34 @@ const Bookings = () => {
         }
         fetchBookings()
     }, [user])
-    const cancelBooking = async (bookingId) => {
-        try {
-            const response = await fetch(`/api/booking/${bookingId}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${user.token}`
-                }
-            })
-            const json = await response.json()
-            if (!response.ok) {
-                throw Error(json.error)
-            }
-            setBookings(prev => prev.filter(b => b._id != bookingId))
-            setCancelledIds(prev => new Set(prev).add(bookingId))
-        } catch (error) {
-            setError(error.message)
-        }
-    }
     if (isLoading) return <p>Loading...</p>
     if (error) return <p className="error">{error}</p>
-    if (bookings?.length == 0) return <p>You have no bookings yet.</p>
+    if (bookings?.length == 0) {
+        if (user.role == 'user') return <p>You have no bookings yet.</p>
+        else return <p>You have no Bookings. Login as a user to book tickets.</p>
+    }
     return (
-        <div className="bookings">
+        <div className="bookings-pg">
             <h2>Your bookings</h2>
-            {bookings.map(b => (
-                b.eventId ? (
-                    <div key={b._id} className="a-booking">
-                        {/* <Link to={`/booking-summary`}> */}
+            <div className="bookings">
+                {bookings.map(b => (
+                    b.eventId ? (
                         <div className="booking-card" onClick={() => navigate('/view-booking', {
                             state: { b }
                         })}>
-                            {b.eventType == 'Show' && <p>{b.eventId.movie.name}</p>}
-                            {b.eventType == 'Concert' && <p>{b.eventId.name}</p>}
-                            {b.eventType == 'TrainClass' && <p>{b.eventId.train.name}</p>}
+                            {b.eventType == 'Show' && <strong>{b.eventId.movie.name}</strong>}
+                            {b.eventType == 'Concert' && <strong>{b.eventId.name}</strong>}
+                            {b.eventType == 'TrainClass' && <strong>{b.eventId.train.name}</strong>}
                             <p>{b.seatsBooked} seat(s) booked</p>
                             <p>Booked on {new Date(b.createdAt).toDateString()}</p>
                         </div>
-                        {/* </Link> */}
-                        {cancelledIds.has(b._id) ? (
-                            <p>Booking cancelled successfully!</p>
-                        ) : (
-                            <button onClick={() => cancelBooking(b._id)}>Cancel booking</button>
-                        )}
-                    </div>
-                ) : (
-                    <div key={b._id}>
-                        <p>Booking unavailable</p>
-                    </div>
-                )
-            ))}
+                    ) : (
+                        <div key={b._id}>
+                            <p>Booking unavailable</p>
+                        </div>
+                    )
+                ))}
+            </div>
         </div>
     )
 }

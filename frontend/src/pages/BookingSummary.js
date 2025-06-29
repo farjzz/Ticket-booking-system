@@ -108,48 +108,48 @@ const BookingSummary = () => {
     }
     return (
         <div className="booking-summary">
-            <h2>Booking Summary</h2>
+            <h3>Booking Summary</h3>
             {eventType == 'Show' && movieDetails && theatreDetails && (
                 <>
-                    <p><strong>Movie:</strong>{movieDetails.name}</p>
-                    <p><strong>Genre:</strong>{movieDetails.genre}</p>
-                    <p><strong>Theatre:</strong>{theatreDetails.theatre_name}, {theatreDetails.location}</p>
-                    <p><strong>Date:</strong>{new Date(event.date).toDateString()}</p>
-                    <p><strong>Time:</strong>{event.time}</p>
-                    <p><strong>Price per ticket:</strong>{event.price}</p>
-                    <p><strong>Number of seats booked:</strong>{seatsBooked}</p>
-                    <p><strong>Total price:</strong>{event.price * seatsBooked}</p>
+                    <p><em>Movie: </em>{movieDetails.name}</p>
+                    <p><em>Genre: </em>{movieDetails.genre}</p>
+                    <p><em>Theatre: </em>{theatreDetails.theatre_name}, {theatreDetails.location}</p>
+                    <p><em>Date: </em>{new Date(event.date).toDateString()}</p>
+                    <p><em>Time: </em>{event.time}</p>
+                    <p><em>Price per ticket: </em>₹{event.price}</p>
+                    <p><em>Number of seats booked: </em>{seatsBooked}</p>
+                    <p><em>Total price: </em>₹{event.price * seatsBooked}</p>
                 </>
             )}
             {eventType == 'Concert' && (
                 <>
-                    <p><strong>Concert:</strong>{event.name}</p>
-                    <p><strong>Genre:</strong>{event.genre}</p>
-                    <p><strong>Artist(s):</strong>{event.artist}</p>
-                    <p><strong>Date:</strong>{new Date(event.date).toDateString()}</p>
-                    <p><strong>Time:</strong>{event.time}</p>
-                    <p><strong>Venue:</strong>{event.venue}, {event.location}</p>
-                    <p><strong>Price per ticket:</strong>{event.price}</p>
-                    <p><strong>Number of seats booked:</strong>{seatsBooked}</p>
-                    <p><strong>Total price:</strong>{event.price * seatsBooked}</p>
+                    <p><em>Concert: </em>{event.name}</p>
+                    <p><em>Genre: </em>{event.genre}</p>
+                    <p><em>Artist(s): </em>{event.artist}</p>
+                    <p><em>Date: </em>{new Date(event.date).toDateString()}</p>
+                    <p><em>Time: </em>{event.time}</p>
+                    <p><em>Venue: </em>{event.venue}, {event.location}</p>
+                    <p><em>Price per ticket: </em>₹{event.price}</p>
+                    <p><em>Number of seats booked: </em>{seatsBooked}</p>
+                    <p><em>Total price: </em>₹{event.price * seatsBooked}</p>
                 </>
             )}
             {eventType == 'TrainClass' && trainDetails && (
                 <>
                     <p><strong>{trainDetails.number} {trainDetails.name}</strong></p>
-                    <p><strong>Source:</strong>{trainDetails.source}</p>
-                    <p><strong>Destination:</strong>{trainDetails.destination}</p>
-                    <p><strong>Departure Date:</strong>{new Date(trainDetails.departureDate).toDateString()}</p>
-                    <p><strong>Departure Time:</strong>{trainDetails.departureTime}</p>
-                    <p><strong>Arrival Date:</strong>{new Date(trainDetails.arrivalDate).toDateString()}</p>
-                    <p><strong>Arrival Time:</strong>{trainDetails.arrivalTime}</p>
-                    <p><strong>Class:</strong>{event.classType}</p>
-                    <p><strong>Price per ticket:</strong>{event.price}</p>
-                    <p><strong>Number of seats booked:</strong>{seatsBooked}</p>
-                    <p><strong>Total price:</strong>{event.price * seatsBooked}</p>
+                    <p><em>Source: </em>{trainDetails.source}</p>
+                    <p><em>Destination: </em>{trainDetails.destination}</p>
+                    <p><em>Departure Date: </em>{new Date(trainDetails.departureDate).toDateString()}</p>
+                    <p><em>Departure Time: </em>{trainDetails.departureTime}</p>
+                    <p><em>Arrival Date: </em>{new Date(trainDetails.arrivalDate).toDateString()}</p>
+                    <p><em>Arrival Time: </em>{trainDetails.arrivalTime}</p>
+                    <p><em>Class: </em>{event.classType}</p>
+                    <p><em>Price per ticket: </em>₹{event.price}</p>
+                    <p><em>Number of seats booked: </em>{seatsBooked}</p>
+                    <p><em>Total price: </em>₹{event.price * seatsBooked}</p>
                 </>
             )}
-            <button onClick={handleBooking} disabled={isBooking}>{isBooking ? 'Booking...' : 'Confirm Booking'}</button>
+            <button onClick={handleBooking} disabled={isBooking} className="book-btn">{isBooking ? 'Booking...' : 'Confirm Booking'}</button>
             {error && <p className="error">{error}</p>}
             {booked && (
                 <>

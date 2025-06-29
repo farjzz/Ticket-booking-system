@@ -5,14 +5,11 @@ import AccTab from './Account'
 const Navbar = () => {
     const { user } = useAuthContext()
     const [showAccTab, setShowAccTab] = useState(false)
-    const toggleAccTab = () => setShowAccTab(true)
+    const toggleAccTab = () => setShowAccTab(prev => !prev)
     return (
         <header className="navbar">
             <div className="nav-logo">
                 <Link to='/' className="logo">BookItAll</Link>
-            </div>
-            <div className="search">
-                <input type="text" placeholder='Search' className="search-bar" />
             </div>
             <div className="nav-right">
                 {!user && (

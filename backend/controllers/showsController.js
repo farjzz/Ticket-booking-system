@@ -1,7 +1,8 @@
 const Shows = require('../models/showModel')
+const Theatre = require('../models/theatreModel')
 
 const createShow = async (req, res) => {
-    const { theatre, date, time, seatsAvailable, price, movie } = req.body//seats available should be the theatre's total seats
+    const { theatre, date, time, price, movie } = req.body//seats available should be the theatre's total seats
     if (req.user.role != 'vendor') {
         return res.status(403).json({ error: 'Access denied' })
     }
@@ -9,14 +10,17 @@ const createShow = async (req, res) => {
     if (!theatre) emptyFields.push('theatre')
     if (!date) emptyFields.push('date')
     if (!time) emptyFields.push('time')
-    if (!seatsAvailable) emptyFields.push('seatsAvailable')
     if (!price) emptyFields.push('price')
     if (!movie) emptyFields.push('movie')
     if (emptyFields.length > 0) {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
+    const theatreObj = await Theatre.findById(theatre)
+    if (!theatreObj) {
+        return res.status(404).json({ error: 'Theatre not found' })
+    }
     try {
-        const show = await Shows.create({ theatre, date, time, seatsAvailable, price, movie, vendorId: req.user._id })
+        const show = await Shows.create({ theatre, date, time, seatsAvailable: theatreObj.seatsTotal, price, movie, vendorId: req.user._id })
         res.status(201).json(show)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -44,6 +48,16 @@ const getTheatreByMovie = async (req, res) => {
     }
 }
 
+const getMovieByTheatre = async (req, res) => {
+    const { theatre } = req.query
+    try {
+        const response = await Shows.find({ theatre }).populate('movie').sort({ date: 1, time: 1 })
+        res.status(200).json(response)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 const deleteShow = async (req, res) => {
     const { id } = req.params
     if (req.user.role != 'vendor') {
@@ -60,4 +74,4 @@ const deleteShow = async (req, res) => {
     }
 }
 
-module.exports = { getShows, createShow, deleteShow, getTheatreByMovie }
+module.exports = { getShows, createShow, deleteShow, getTheatreByMovie, getMovieByTheatre }

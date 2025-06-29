@@ -1,4 +1,5 @@
 const Theatre = require('../models/theatreModel')
+const Show = require('../models/showModel')
 
 const createTheatre = async (req, res) => {
     const { theatre_name, location, seatsTotal } = req.body
@@ -39,6 +40,7 @@ const deleteTheatre = async (req, res) => {
         if (!response) {
             return res.status(404).json({ error: 'Theatre not found' })
         }
+        await Show.deleteMany({ theatre: id })
         res.status(200).json(response)
     } catch (error) {
         res.status(400).json({ error: error.message })

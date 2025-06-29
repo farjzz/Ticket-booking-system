@@ -6,7 +6,7 @@ const EventCard = ({ event }) => {
             <div className="event-card">
                 {event.eventType == 'Show' && (
                     <div className="movie-card">
-                        <img src="{`/uploads/${event.poster}`}" alt="movie-poster" />
+                        <img src={`/uploads/${event.poster}`} alt="movie-poster" />
                         <div className="event-details">
                             <h3>{event.name}</h3>
                             <p>{event.genre}</p>
@@ -16,7 +16,7 @@ const EventCard = ({ event }) => {
                 )}
                 {event.eventType == 'Concert' && (
                     <div className="concert-card">
-                        <img src="{`/uploads/${event.poster}`}" alt="concert-poster" />
+                        <img src={`/uploads/${event.poster}`} alt="concert-poster" />
                         <div className="event-details">
                             <h3>{event.name}</h3>
                             <p>{event.artist}</p>
@@ -32,13 +32,17 @@ const EventCard = ({ event }) => {
                             <h3>{event.name}</h3>
                         </div>
                         <div className="train-right">
+                            <p>From:</p>
                             <div className="src">
-                                <p>{event.departureDate.slice(0, 10)} at {event.departureTime}</p>
-                                <p>{event.source}</p>
+                                <p><strong>{event.source}</strong></p>
+                                <p>{event.departureDate.slice(0, 10)}</p>
+                                <p>{event.departureTime}</p>
                             </div>
+                            <p>To:</p>
                             <div className="dest">
-                                <p>{event.arrivalDate.slice(0, 10)} at {event.arrivalTime}</p>
-                                <p>{event.destination}</p>
+                                <p><strong>{event.destination}</strong></p>
+                                <p>{event.arrivalDate.slice(0, 10)}</p>
+                                <p>{event.arrivalTime}</p>
                             </div>
                         </div>
                     </div>

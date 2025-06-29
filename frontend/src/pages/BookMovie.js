@@ -21,6 +21,9 @@ const BookMovie = () => {
         if (!user) {
             setError('You must be logged in to book tickets')
             setIsLoading(false)
+            setTimeout(() => {
+                navigate('/login')
+            }, 2000)
         }
     }, [user])
     useEffect(() => {
@@ -84,29 +87,36 @@ const BookMovie = () => {
     if (error) return <p className="error">{error}</p>
     return (
         <div className="movie-booking">
-            <h3>Select City</h3>
-            <select value={selectedCity} onChange={(e) => { setSelectedCity(e.target.value); setSelectedTheatre(null); setSelectedShow(null); setSeats(1); setBooked(false); setError(null) }}>
-                <option value="">--- Choose a City ---</option>
-                {cities.map(c => (
-                    <option value={c} key={c}>{c}</option>
-                ))}
-            </select>
+            {cities.length == 0 && (
+                <p>No shows available</p>
+            )}
+            {cities.length != 0 && (
+                <>
+                    <h3>Select City</h3>
+                    <select value={selectedCity} onChange={(e) => { setSelectedCity(e.target.value); setSelectedTheatre(null); setSelectedShow(null); setSeats(1); setBooked(false); setError(null) }}>
+                        <option value="">--- Select a City ---</option>
+                        {cities.map(c => (
+                            <option value={c} key={c}>{c}</option>
+                        ))}
+                    </select>
+                </>
+            )}
             {selectedCity && (
                 <>
-                    <h4>Theatres in {selectedCity}</h4>
+                    <h3>Theatres in {selectedCity}</h3>
                     {theatresInCity.length == 0 && <p>No shows available</p>}
                     <select value={selectedTheatre} onChange={(e) => setSelectedTheatre(e.target.value)}>
-                        <option value="">--- Choose a Theatre ---</option>
+                        <option value="">--- Select a Theatre ---</option>
                         {theatresInCity.map(t => (
                             <option value={t._id} key={t._id}>{t.theatre_name}</option>
                         ))}
                     </select>
                     {selectedTheatre && (
                         <>
-                            <h4>Shows</h4>
+                            <h3>Shows</h3>
                             {shows.length == 0 && <p>No shows available</p>}
                             <select value={selectedShow} onChange={(e) => setSelectedShow(e.target.value)}>
-                                <option value="">--- Choose a Show ---</option>
+                                <option value="">--- Select a Show ---</option>
                                 {shows.map(s => (
                                     <option value={s._id} key={s._id}>{new Date(s.date).toLocaleDateString()} at {s.time} ({s.seatsAvailable} seat(s) left)</option>
                                 ))}

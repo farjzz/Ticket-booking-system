@@ -5,36 +5,33 @@ import EventCard from "../components/EventCard";
 const Home = () => {
     const [events, setEvents] = useState([])
     const [selectedCategory, setSelectedCategory] = useState('')
-    const [isLoading, setIsLoading] = useState(true) //check initial state
+    const [isLoading, setIsLoading] = useState(false) //check initial state
     const [error, setError] = useState(null)
     useEffect(() => {
         const fetchEvents = async () => {
             setIsLoading(true)
             try {
-                const response = await fetch('/api/events')
+                const response = await fetch(`/api/events?type=${selectedCategory}` || '/api/events')
                 const json = await response.json()
                 if (!response.ok) {
                     throw Error(json.error)
                 }
                 setEvents(json)
-                setIsLoading(false)
             } catch (error) {
                 setError(error.message)
-                setIsLoading(false)
             }
+            setIsLoading(false)
         }
         fetchEvents()
-    }, [])
-    const eventsFiltered = selectedCategory ? events.filter(e => e.eventType == selectedCategory) : events
+    }, [selectedCategory])
     //some of these dont have a class name (loading, no events found)
     return (
         <div className="home">
             <EventFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
             <div className="events-list">
-                {isLoading && <p>Loading events...</p>}
                 {error && <p className="error">{error}</p>}
-                {!isLoading && !error && eventsFiltered.length == 0 && <p>No events found</p>}
-                {eventsFiltered.map(e => (
+                {!isLoading && !error && events.length == 0 && <p>No events found</p>}
+                {events.map(e => (
                     <EventCard event={e} key={e._id} />
                 ))}
             </div>

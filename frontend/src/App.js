@@ -1,4 +1,6 @@
+import './index.css';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useAuthContext } from './hooks/useAuthContext';
 import Login from './pages/login';
 import Signup from './pages/Signup';
 import Home from './pages/Home'
@@ -14,8 +16,13 @@ import ViewBooking from './pages/ViewBooking';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import CreateEvent from './pages/CreateEvent'
-import ViewEvents from './pages/ViewEvents'
+import VendorDashboard from './pages/VendorDashboard';
+import VendorTheatre from './pages/VendorTheatre';
+import VendorConcert from './pages/VendorConcert';
+import VendorTrain from './pages/VendorTrain';
+import BookConcert from './pages/BookConcert';
 function App() {
+  const { user } = useAuthContext()
   return (
     <div className="App">
       <BrowserRouter>
@@ -28,11 +35,11 @@ function App() {
             />
             <Route
               path="/login"
-              element={<Login />}
+              element={!user ? <Login /> : <Navigate to="/" />}
             />
             <Route
               path="/signup"
-              element={<Signup />}
+              element={!user ? <Signup /> : <Navigate to="/" />}
             />
             <Route
               path="/events/:id"
@@ -40,27 +47,27 @@ function App() {
             />
             <Route
               path="/bookmovie/:id"
-              element={<BookMovie />}
+              element={user ? <BookMovie /> : <Login />}
             />
             <Route
               path="/booktrain/:id"
-              element={<BookTrain />}
+              element={user ? <BookTrain /> : <Login />}
             />
-            {/* <Route
+            <Route
+              path="/bookconcert/:id"
+              element={user ? <BookConcert /> : <Login />}
+            />
+            <Route
               path="/create-event"
               element={<CreateEvent />}
             />
-            <Route
-              path="/view-events"
-              element={<ViewEvents />}
-            /> */}
             <Route
               path="/edit-profile"
               element={<EditProfile />}
             />
             <Route
               path="/bookings"
-              element={<Bookings />}
+              element={user ? <Bookings /> : <Login />}
             />
             <Route
               path="/change-password"
@@ -68,7 +75,7 @@ function App() {
             />
             <Route
               path="/booking-summary"
-              element={<BookingSummary />}
+              element={user ? <BookingSummary /> : <Login />}
             />
             <Route
               path="/view-booking"
@@ -80,7 +87,23 @@ function App() {
             />
             <Route
               path="/forgot-password"
-              element={<ForgotPassword />}
+              element={!user ? <ForgotPassword /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/vendor"
+              element={<VendorDashboard />}
+            />
+            <Route
+              path="/vendor-theatre/:id"
+              element={<VendorTheatre />}
+            />
+            <Route
+              path="/vendor-concert/:id"
+              element={<VendorConcert />}
+            />
+            <Route
+              path="/vendor-train/:id"
+              element={<VendorTrain />}
             />
           </Routes>
         </div>

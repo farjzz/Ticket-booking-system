@@ -33,12 +33,12 @@ const ResetPassword = () => {
     }
     return (
         <div className="reset-password">
-            <h2>Reset Password</h2>
-            <form onSubmit={handleSubmit}>
+            <h3>Reset Password</h3>
+            <form>
                 <label>New Password:</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="submit">Reset</button>
             </form>
+            <button type="submit" className="reset-btn" onClick={() => handleSubmit}>Reset</button>
             {success && <p className="success">{success}</p>}
             {error && <p className="error">{error}</p>}
         </div>

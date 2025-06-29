@@ -1,4 +1,4 @@
-const { getShows, createShow, deleteShow, getTheatreByMovie } = require('../controllers/showsController')
+const { getShows, createShow, deleteShow, getTheatreByMovie, getMovieByTheatre } = require('../controllers/showsController')
 const express = require('express')
 const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
@@ -7,4 +7,5 @@ router.get('/', getShows)
 router.post('/', createShow)
 router.delete('/:id', deleteShow)
 router.get('/bymovie', getTheatreByMovie)
+router.get('/bytheatre', getMovieByTheatre)
 module.exports = router

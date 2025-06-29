@@ -36,58 +36,58 @@ const Event = () => {
     return (
         <div className="event-details-pg">
             {event.eventType == 'Show' && (
-                <>
+                <div className="movie-details">
                     <img src={`/uploads/${event.poster}`} alt={event.name} />
                     <div className="details">
                         <h2>{event.name}</h2>
                         <p>
-                            <span>{hrs && (`${hrs}h `)}</span>
-                            <span>{`${mins}min`}</span>
-                            <span>{event.genre}</span>
+                            <span>{hrs && (`${hrs}h `)} {`${mins}min`} · {event.genre}</span>
                         </p>
                         <p>{event.language}</p>
+                        <Link to={`/bookmovie/${event._id}`}>
+                            <button className="book-btn">Proceed to booking</button>
+                        </Link>
                     </div>
-                    <Link to={`/bookmovie/${event._id}`}>
-                        <button className="book-btn">Proceed to booking</button>
-                    </Link>
-                </>
+                </div>
             )}
             {event.eventType == 'Concert' && (
                 <>
                     <img src={`/uploads/${event.poster}`} alt={event.name} />
                     <div className="details">
                         <h2>{event.name}</h2>
-                        <p>{event.artist}</p>
-                        <p>{event.genre}</p>
+                        <p>{event.artist} · {event.genre}</p>
                         <p>{new Date(event.date).toLocaleDateString()} {event.time}</p>
-                        <p>
-                            <span>{hrs && (`${hrs}h `)}</span>
-                            <span>{`${mins}min`}</span>
-                        </p>
                         <p>{event.language}</p>
                         <p>{event.venue},{event.location}</p>
                         <p>Seats left: {event.seatsAvailable}</p>
                         <p>Price: ₹{event.price}</p>
+                        <p>{event.description}</p>
+                        <button className="book-btn" onClick={() => navigate(`/bookconcert/${event._id}`, {
+                            state: { event }
+                        })}>Proceed to booking</button>
                     </div>
-                    <p>{event.description}</p>
-                    <label>Number of seats:</label>
-                    <input type="number" value={seats} min="1" max={event.seatsAvailable} onChange={(e) => setSeats(Number(e.target.value))} />
-                    <p>Total cost: ₹{event.price * seats} </p>
-                    <button className="book-btn" onClick={() => navigate('/booking-summary', {
-                        state: { event, eventType: 'Concert', seatsBooked: seats, seatsSelected: '' }
-                    })}>Proceed to booking</button>
                 </>
             )}
             {event.eventType == 'TrainClass' && (
-                <div className="details">
-                    <p>{event.number}</p>
-                    <h2>{event.name}</h2>
-                    <p>Source: {event.source} {event.departureDate.slice(0, 10)} {event.departureTime}</p>
-                    <p>Destination: {event.destination} {event.arrivalDate.slice(0, 10)} {event.arrivalTime}</p>
-                    <p>{event.description}</p>
-                    <Link to={`/booktrain/${event._id}`}>
-                        <button className="book-btn">Proceed to booking</button>
-                    </Link>
+                <div className="train-details">
+                    <div>
+                        <p>{event.number}</p>
+                        <h2>{event.name}</h2>
+                        <p>{event.description}</p>
+                    </div>
+                    <div>
+                        <p><em>Source:</em> {event.source}</p>
+                        <p><em>Date of Departure:</em> {event.departureDate.slice(0, 10)}</p>
+                        <p><em>Time of Departure:</em> {event.departureTime}</p>
+                        <p><em>Destination:</em> {event.destination}</p>
+                        <p><em>Date of Arrival:</em> {event.arrivalDate.slice(0, 10)}</p>
+                        <p><em>Time of Arrival:</em> {event.arrivalTime}</p>
+                    </div>
+                    <div>
+                        <Link to={`/booktrain/${event._id}`}>
+                            <button className="book-btn">Proceed to booking</button>
+                        </Link>
+                    </div>
                 </div>
             )}
         </div>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from '../hooks/useAuthContext'
+import { Link } from "react-router-dom";
 
 const ChangePassword = () => {
     const { user } = useAuthContext()
@@ -47,17 +48,28 @@ const ChangePassword = () => {
 
     return (
         <div className="change-password">
-            <h2>Change Password</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Current Password:</label>
-                <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
-                <label>New Password:</label>
-                <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-                <label>Confirm Password:</label>
-                <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-                <button type="submit" disabled={isLoading}>{isLoading ? "Updating..." : "Update Password"}</button>
+            <form onSubmit={handleSubmit} className="change-pass-form">
+                <h2>Change Password</h2>
+                <div className="change-pass-details">
+                    <label>Current Password:</label>
+                    <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} />
+                </div>
+                <div className="change-pass-details">
+                    <label>New Password:</label>
+                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+                </div>
+                <div className="change-pass-details">
+                    <label>Confirm Password:</label>
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                </div>
+                <button disabled={isLoading} type="submit" className="btn">{isLoading ? "Updating..." : "Update Password"}</button>
                 {error && <p className="error">{error}</p>}
-                {success && <p>Password changed successfully!</p>}
+                {success && (
+                    <>
+                        <p>Password changed successfully!</p>
+                        <Link to="/">Go to home</Link>
+                    </>
+                )}
             </form>
         </div>
     )

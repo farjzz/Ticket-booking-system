@@ -1,35 +1,21 @@
-import { useState } from "react";
-import { FaFilter } from 'react-icons/fa'
-
 const EventFilter = ({ selectedCategory, setSelectedCategory }) => {
-    const [filters, setFilters] = useState(false)
     const handleClick = (c) => {
         setSelectedCategory(c)
-        setFilters(false)
     }
     return (
         <div className="event-filter">
-            <div className="filter">
-                <FaFilter className="filter-icon" onClick={() => setFilters(prev => !prev)} />
-            </div>
-            {filters && (
-                <div className="filter-dropdown">
-                    <p onClick={() => handleClick('movie')}>Movies</p>
-                    <p onClick={() => handleClick('concert')}>Concerts</p>
-                    <p onClick={() => handleClick('train')}>Trains</p>
-                </div>
-            )}
             <div className="categories">
-                <span className={selectedCategory == 'Show' ? 'active' : ''} onClick={() => handleClick('movie')}>
+                <span className={selectedCategory == 'Show' ? 'active' : ''} onClick={() => handleClick('Show')}>
                     Movies
                 </span>
-                <span className={selectedCategory == 'Concert' ? 'active' : ''} onClick={() => handleClick('concert')}>
+                <span className={selectedCategory == 'Concert' ? 'active' : ''} onClick={() => handleClick('Concert')}>
                     Concerts
                 </span>
-                <span className={selectedCategory == 'TrainClass' ? 'active' : ''} onClick={() => handleClick('train')}>
+                <span className={selectedCategory == 'TrainClass' ? 'active' : ''} onClick={() => handleClick('TrainClass')}>
                     Trains
                 </span>
             </div>
+            <button onClick={() => handleClick('')} className="filters-btn" disabled={!selectedCategory}>Clear filters</button>
         </div>
     )
 }

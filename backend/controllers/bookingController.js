@@ -48,6 +48,7 @@ const getBookings = async (req, res) => {
             if (!b.eventId) return b;
             if (b.eventType === 'Show') {
                 await b.eventId.populate('movie');
+                await b.eventId.populate('theatre');
             }
             else if (b.eventType === 'TrainClass') {
                 await b.eventId.populate('train');

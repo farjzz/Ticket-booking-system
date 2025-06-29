@@ -10,13 +10,14 @@ const BookTrain = () => {
     const [seats, setSeats] = useState(1)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
-    const [booked, setBooked] = useState(false)
-    const [isBooking, setIsBooking] = useState(false)
     const { user } = useAuthContext()
     useEffect(() => {
         if (!user) {
             setError('You must be logged in to book tickets')
             setIsLoading(false)
+            setTimeout(() => {
+                navigate('/login')
+            }, 2000)
         }
     }, [user])
     useEffect(() => {
@@ -46,9 +47,9 @@ const BookTrain = () => {
     if (error) return <p className="error">{error}</p>
     return (
         <div className="train-booking">
-            <h4>Class Type</h4>
+            <h3>Class Type</h3>
             {classes.length == 0 && <p>No class available</p>}
-            <select value={selectedClass} onChange={(e) => { setSelectedClass(e.target.value); setSeats(1); setBooked(false); setError(null) }}>
+            <select value={selectedClass} onChange={(e) => { setSelectedClass(e.target.value); setSeats(1); setError(null) }}>
                 <option value="">--- Select a Class ---</option>
                 {classes.map(c => (
                     <option value={c._id} key={c._id}>{c.classType} ({c.seatsAvailable} seat(s) left)</option>
