@@ -21,6 +21,10 @@ const classSchema = new Schema({
     seatsAvailable: {
         type: Number,
         required: true
+    },
+    vendorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, { timestamps: true })
 module.exports = mongoose.model('TrainClass', classSchema)

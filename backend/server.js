@@ -27,7 +27,7 @@ app.use('/api/theatres', theatreRoutes)
 app.use('/api/shows', showRoutes)
 app.use('/api/class', classRoutes)
 app.use('/api/vendor', vendorRoutes)
-app.use('/uploads', express.static(path.join(___dirname, 'uploads')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(process.env.PORT, () => {

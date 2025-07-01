@@ -46,28 +46,31 @@ const VendorConcert = () => {
             setDeleted(true)
             setTimeout(() => {
                 navigate('/vendor')
-            }, 2000)
+            }, 1000)
         } catch (error) {
             setError(error.message)
         }
     }
-    return (<div className="concert-details">
+    return (<div className="concert-detailss">
         {isLoading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
         {concert && (
             <div className="concert">
-                <h3>{concert.name}</h3>
-                <p>Artist(s): {concert.artist}</p>
-                <p>Genre: {concert.genre}</p>
-                <p>Date: {new Date(concert.date).toLocaleDateString()}</p>
-                <p>Time: {concert.time}</p>
-                <p>Venue: {concert.venue}, {concert.location}</p>
-                <p>Price: ₹{concert.price}</p>
-                <p>Total seats: {concert.seatsTotal}</p>
-                <p>Seats booked: {concert.seatsTotal - concert.seatsAvailable}</p>
-                <p>Seats left: {concert.seatsAvailable}</p>
-                <button onClick={() => deleteConcert}>Delete Concert</button>
-                {deleted && <p>Concert deleted!</p>}
+                <img src={concert.poster} alt="concert-poster" />
+                <div className="concert-txt">
+                    <h3>{concert.name}</h3>
+                    <p><em>Artist:</em> {concert.artist}</p>
+                    <p><em>Genre:</em> {concert.genre}</p>
+                    <p><em>Date:</em> {new Date(concert.date).toLocaleDateString()}</p>
+                    <p><em>Time:</em> {concert.time}</p>
+                    <p><em>Venue:</em> {concert.venue}, {concert.location}</p>
+                    <p><em>Price:</em> ₹{concert.price}</p>
+                    <p><em>Total seats:</em> {concert.seatsTotal}</p>
+                    <p><em>Seats booked:</em> {concert.seatsTotal - concert.seatsAvailable}</p>
+                    <p><em>Seats left:</em> {concert.seatsAvailable}</p>
+                    <button onClick={() => deleteConcert()} className="btn">Delete Concert</button>
+                    {deleted && <p>Concert deleted!</p>}
+                </div>
             </div>
         )}
     </div>)

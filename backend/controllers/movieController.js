@@ -2,6 +2,7 @@ const Movie = require('../models/movieModel')
 
 const createMovie = async (req, res) => {
     const { name, genre, language, description, durationInMins } = req.body
+    const poster = req.file ? `/uploads/${req.file.filename}` : undefined
     if (req.user.role != 'vendor') {
         return res.status(403).json({ error: 'Access denied' })
     }
@@ -14,7 +15,7 @@ const createMovie = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
     try {
-        const movie = await Movie.create({ name, genre, language, description, durationInMins, vendorId: req.user._id })
+        const movie = await Movie.create({ name, genre, language, description, durationInMins, vendorId: req.user._id, poster })
         res.status(201).json(movie)
     } catch (error) {
         res.status(400).json({ error: error.message })

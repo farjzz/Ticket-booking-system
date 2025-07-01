@@ -68,7 +68,7 @@ const VendorTrain = () => {
             setDeleted(true)
             setTimeout(() => {
                 navigate('/vendor')
-            }, 2000)
+            }, 1000)
         } catch (error) {
             setError(error.message)
         }
@@ -85,40 +85,45 @@ const VendorTrain = () => {
             if (!response.ok) {
                 throw Error(json.error)
             }
-            setDeleted(true)
-            setTimeout(() => {
-                navigate('/vendor')
-            }, 2000)
+            setClasses(prev => prev.filter(c => c._id != classId))
         } catch (error) {
             setError(error.message)
         }
     }
-    return (<div className="train-details">
+    return (<div>
         {isLoading && <p>Loading...</p>}
         {error && <p className="error">{error}</p>}
-        {train && (
-            <div className="train">
-                <h3>{train.number} {train.name}</h3>
-                <p>Source: {train.source}</p>
-                <p>Destination: {train.destination}</p>
-                <p>Departure Date: {new Date(train.departureDate).toLocaleDateString()}</p>
-                <p>Departure Time: {train.departureTime}</p>
-                <p>Arrival Date: {new Date(train.arrivalDate).toLocaleDateString()}</p>
-                <p>Arrival Time: {train.arrivalTime}</p>
-                <button onClick={() => deleteTrain}>Delete Train</button>
-                {deleted && <p>Train deleted!</p>}
+        <div className="trainn">
+            {train && (
+                <div className="train">
+                    <h4>{train.number}</h4>
+                    <h3>{train.name}</h3>
+                    <p><em>Source:</em> {train.source}</p>
+                    <p><em>Destination:</em> {train.destination}</p>
+                    <p><em>Departure Date:</em> {new Date(train.departureDate).toLocaleDateString()}</p>
+                    <p><em>Departure Time:</em> {train.departureTime}</p>
+                    <p><em>Arrival Date:</em> {new Date(train.arrivalDate).toLocaleDateString()}</p>
+                    <p><em>Arrival Time:</em> {train.arrivalTime}</p>
+                    <button onClick={() => deleteTrain()} className="train-btn">Delete Train</button>
+                    {deleted && <p>Train deleted!</p>}
+                </div>
+            )}
+            <div className="class-list">
+                <h3>Available Classes</h3>
+                <div className="classes">
+                    {!isLoading && classes.map(c => (
+                        <div className="class">
+                            <span onClick={() => deleteClass(c._id)} className="material-symbols-outlined del-icon train-del">delete</span>
+                            <h4>{c.classType}</h4>
+                            <p><em>Price:</em> ₹{c.price}</p>
+                            <p><em>Total Seats:</em> {c.seatsTotal}</p>
+                            <p><em>Seats Booked:</em> {c.seatsTotal - c.seatsAvailable}</p>
+                            <p><em>Seats Left:</em> {c.seatsAvailable}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
-        )}
-        {!isLoading && classes.map(c => (
-            <div className="classes">
-                <h3>{c.classType}</h3>
-                <p>Price: ₹{c.price}</p>
-                <p>Total Seats: {c.seatsTotal}</p>
-                <p>Seats Booked: {c.seatsTotal - c.seatsAvailable}</p>
-                <p>Seats Left: {c.seatsAvailable}</p>
-                <button onClick={() => deleteClass(c._id)}>Delete Class</button>
-            </div>
-        ))}
+        </div>
     </div>)
 }
 

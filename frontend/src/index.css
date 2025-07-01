@@ -6,6 +6,8 @@
   --shadow: rgba(37, 93, 157, 0.2);
   --text: #081c39;
   --shadow-hover: rgba(37, 93, 157, 0.333);
+  --grey: #4b5563;
+  --grey-lines: rgb(189, 189, 189);
 }
 
 * {
@@ -23,6 +25,10 @@ html {
 .home {
   padding: 1rem 1rem;
   background-color: var(--home);
+}
+
+.error {
+  color: red;
 }
 
 .navbar {
@@ -87,22 +93,80 @@ html {
 }
 
 .events-list {
-  display: grid;
-  grid-template-columns: (repeat(auto-fit, 320px));
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem 2rem;
   gap: 1.5rem;
 }
 
-.event-card {
-  padding: 1rem;
+.vendor-events-list {
+  display: flex;
+  margin: 2rem 2rem;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+
+.event-link,
+.vendor-event-card {
   background-color: rgb(255, 255, 255);
   border-radius: 12px;
   display: flex;
   gap: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 60%;
 }
 
-.event-card:hover {
+.movie-card,
+.concert-card {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.movie-card h3,
+.concert-card h3,
+.train-left h3,
+.theatre-card h3 {
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.movie-card p,
+.concert-card p,
+.train-card p,
+.theatre-card p {
+  margin: 0.5rem 0;
+}
+
+.event-card,
+.vendor-event-card {
+  flex: 1;
+}
+
+.train-card {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+}
+
+.train-right {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-left: 5rem;
+}
+
+.train-right strong {
+  font-weight: 500;
+}
+
+.event-link:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.theatre-card {
+  margin: 2rem;
 }
 
 a {
@@ -110,11 +174,13 @@ a {
   color: inherit;
 }
 
-.event-card img {
-  width: 150px;
+.event-card img,
+.vendor-event-card img {
+  width: 10rem;
   height: auto;
-  border-radius: 8px;
   object-fit: cover;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 
 /* .event-details {
@@ -137,28 +203,7 @@ a {
   margin-left: 2rem;
 }
 
-.train-card {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1rem 1rem;
-}
-
-.train-right {
-  display: flex;
-  float: right;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.src,
-.dest {
-  margin: 0 2rem;
-}
-
 .event-details-pg {
-  padding: 1.5rem;
   background-color: rgb(255, 255, 255);
   border-radius: 12px;
   display: flex;
@@ -166,8 +211,27 @@ a {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.event-details-pg h2 {
+  font-weight: 500;
+  font-size: 2rem;
+}
+
 .details {
   margin-left: 1.5rem;
+}
+
+.concert-details,
+.movie-details {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.concert-details img,
+.movie-details img {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  height: 80vh;
 }
 
 .train-details {
@@ -184,22 +248,35 @@ a {
   margin: 0.5rem 0;
 }
 
+.details p {
+  font-size: 1.1rem;
+}
+
+.details em {
+  font-size: 1rem;
+}
+
 .book-btn,
 .login-btn,
 .signup-btn,
 .reset-password-btn,
 .reset-btn,
 .cancel-btn,
-.btn {
+.btn,
+.train-btn {
   background-color: var(--darkblue);
   color: white;
   border-radius: 4px;
   padding: 0.7rem 1.3rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 0.8rem;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
   margin: 1rem 0;
+}
+
+.book-btn {
+  font-size: 1rem;
 }
 
 .login-btn,
@@ -213,7 +290,8 @@ a {
 .reset-password-btn:hover,
 .reset-btn:hover,
 .cancel-btn:hover,
-.btn:hover {
+.btn:hover,
+.train-btn:hover {
   box-shadow: 3px 3px 8px var(--shadow);
   background-color: rgba(37, 93, 157, 0.934);
 }
@@ -238,7 +316,6 @@ a {
 .view-booking h3,
 .view-booking p {
   margin: 0.8rem 0;
-  color: var(--text);
   font-weight: 450;
 }
 
@@ -260,7 +337,6 @@ em {
 option {
   width: 100%;
   border: none;
-  color: var(--text);
 }
 
 select {
@@ -272,7 +348,6 @@ select {
   box-shadow: 2px 2px 4px rgba(37, 93, 157, 0.541);
   border: none;
   outline: none;
-  color: var(--text);
 }
 
 select:focus {
@@ -281,7 +356,8 @@ select:focus {
   border: none;
 }
 
-input {
+input,
+textarea {
   margin: 0 1rem;
   height: 1.5rem;
   font-size: 0.8rem;
@@ -292,7 +368,12 @@ input {
   box-shadow: 2px 2px 4px rgba(37, 93, 157, 0.541);
 }
 
-input:focus {
+textarea {
+  height: 4rem;
+}
+
+input:focus,
+textarea:focus {
   outline: none;
   box-shadow: 2px 2px 4px rgba(37, 93, 157, 0.541);
 }
@@ -310,9 +391,10 @@ input:focus {
 
 .login-form,
 .signup-form,
-.forgot-password,
+.forgot-password-form,
 .reset-password,
-.change-pass-form {
+.change-pass-form,
+.edit-form {
   padding: 2rem 2rem;
   background-color: rgb(255, 255, 255);
   border-radius: 12px;
@@ -324,7 +406,8 @@ input:focus {
   gap: 1rem;
 }
 
-.change-pass-form {
+.change-pass-form,
+.edit-form {
   max-width: 25rem;
 }
 
@@ -353,7 +436,8 @@ input:focus {
 .login-details,
 .signup-details,
 .forgot-password-details,
-.change-pass-details {
+.change-pass-details,
+.edit-details {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -362,12 +446,13 @@ input:focus {
 .login-form input,
 .signup-form input,
 .forgot-password input,
-.change-password input {
+.change-password input,
+.edit-form input {
   border: 0.5px solid grey;
   box-shadow: none;
   width: 60%;
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .login-bottom a,
@@ -414,9 +499,18 @@ input:focus {
   margin-right: 2rem;
 }
 
-.nav-link:hover {
+.create-link {
+  color: white;
+  font-size: 0.9rem;
+  margin-right: -1rem;
+}
+
+.nav-link:hover,
+.create-link:hover {
   text-decoration: underline;
 }
+
+
 
 .bookings-pg {
   margin: 2rem;
@@ -451,4 +545,397 @@ input:focus {
   margin: 0.5rem 0;
   font-size: 0.9rem;
   color: #4b5563;
+}
+
+.profile {
+  margin-right: 1rem;
+}
+
+.acc-tab {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 17rem;
+  background-color: white;
+  border-left: 0.5px solid var(--grey-lines);
+  box-shadow: 2px 2px 5px var(--shadow);
+  padding: 1rem;
+  z-index: 999;
+  animation: slideIn 0.2s ease-in-out;
+  height: 100vh;
+}
+
+.acc-tab.closing {
+  animation: slideOut 0.2s ease-in-out
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.profile-pic {
+  height: 8rem;
+  width: 8rem;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: center;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info {
+  display: flex;
+  margin: 1rem 0;
+  margin-left: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info strong {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.user-info p {
+  color: var(--grey);
+  font-size: 0.9rem;
+}
+
+.user-info a {
+  font-size: 0.9rem;
+  color: var(--grey);
+  margin-right: 0.5rem;
+}
+
+.user-info a:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+.acc-tab h3 {
+  border-bottom: 0.5px solid var(--grey-lines);
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.acc-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.acc-tabs button {
+  background-color: transparent;
+  padding: 0.8rem 0.2rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+  border: none;
+  border-bottom: 0.5px solid var(--grey-lines);
+}
+
+.btnn {
+  cursor: pointer;
+}
+
+.profile-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.material-symbols-outlined {
+  cursor: pointer;
+}
+
+.theatre {
+  display: flex;
+  margin: 2rem 0;
+  align-items: center;
+}
+
+.theatre-detailss {
+  align-items: center;
+  margin: 2rem 6rem;
+}
+
+.theatre-detailss h3 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0
+}
+
+.theatre-details h3 {
+  font-size: 1.7rem;
+  margin: 0;
+}
+
+
+
+.movie {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.moviee {
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.theatre-details p {
+  margin: 0.8rem 0;
+}
+
+.theatre-name {
+  display: flex;
+  gap: 1rem;
+  align-items: last baseline;
+}
+
+.the-movie {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.the-movie img {
+  width: 12rem;
+  height: auto;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.moviee p {
+  margin-bottom: 0.5rem;
+}
+
+.moviee h4 {
+  margin-bottom: 0.7rem;
+}
+
+.shows {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 0.8rem;
+}
+
+.show-card {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  border: 0.5px solid var(--grey-lines);
+  margin: 1.5rem 1rem;
+  padding: 1rem;
+  padding-right: 0.3rem;
+  gap: 1rem;
+}
+
+.moviee h3 {
+  margin: 0 1rem;
+  font-weight: 600;
+}
+
+.show {
+  padding-top: 0.5rem;
+}
+
+.del-icon {
+  height: fit-content;
+  margin-top: -0.7rem;
+  color: grey;
+}
+
+.del-icon:hover,
+.del:hover {
+  color: black;
+}
+
+.del {
+  color: grey;
+}
+
+.concert {
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  align-items: center;
+  max-width: 50rem;
+  margin: 2rem auto;
+  display: flex;
+  gap: 2rem;
+}
+
+.concert img {
+  width: 17rem;
+  height: auto;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.concert h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.concert p {
+  margin-bottom: 0.3rem;
+}
+
+.trainn {
+  display: flex;
+}
+
+.train {
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  min-width: 17rem;
+  flex: 1;
+  margin: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.train p {
+  margin: 0.2rem 0;
+}
+
+.train h3 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.train h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+}
+
+.train-btn {
+  margin-top: 1.5rem;
+}
+
+.class-list {
+  margin: 2.5rem 1rem;
+}
+
+.class-list h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  margin-left: 0.3rem;
+}
+
+.classes {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.2rem 0;
+  gap: 1.5rem;
+}
+
+.class {
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  border: 1px solid var(--grey-lines);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.train-del {
+  align-self: last baseline;
+  margin-right: -0.5rem;
+}
+
+.class p {
+  margin-bottom: 0.2rem;
+}
+
+.class h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.new-event {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.new-event label {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+
+.create-event h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.create-event {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+  max-width: 62vw;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  padding: 1.5rem;
+}
+
+.create-event input,
+.create-event textarea {
+  box-shadow: none;
+  border: 0.5px solid var(--grey-lines);
+  width: 70%;
+}
+
+.create-event label {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.entry {
+  display: flex;
+  justify-content: space-between;
+}
+
+textarea,
+input {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.entry input,
+.entry textarea {
+  margin-right: 0;
+}
+
+.create-show select,
+.create-class select {
+  margin-bottom: 1rem;
 }

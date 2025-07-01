@@ -61,7 +61,7 @@ const CreateClassForm = () => {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="create-class">
             {trains.length == 0 && <p>No trains available</p>}
             <select value={selectedTrain} onChange={(e) => setSelectedTrain(e.target.value)}>
                 <option value="">--- Select a Train ---</option>
@@ -70,15 +70,21 @@ const CreateClassForm = () => {
                 ))}
             </select>
             {selectedTrain && (
-                <div>
+                <div className="create-event">
                     <h2>Add a New Class</h2>
-                    <label>Class Type:</label>
-                    <input type="text" value={classType} onChange={(e) => setClassType(e.target.value)} required />
-                    <label>Price (in rupees):</label>
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
-                    <label>Total seats:</label>
-                    <input type="number" value={seatsTotal} onChange={(e) => setSeatsTotal(e.target.value)} required />
-                    <button type="submit">Create Class</button>
+                    <div className="entry">
+                        <label>Class Type:</label>
+                        <input type="text" value={classType} onChange={(e) => setClassType(e.target.value)} required />
+                    </div>
+                    <div className="entry">
+                        <label>Price (in rupees):</label>
+                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
+                    </div>
+                    <div className="entry">
+                        <label>Total seats:</label>
+                        <input type="number" value={seatsTotal} onChange={(e) => setSeatsTotal(e.target.value)} required />
+                    </div>
+                    <button type="submit" className="btn">Create Class</button>
                     {success && (
                         <>
                             <p className="success">Class was created successfully!</p>

@@ -51,6 +51,10 @@ const concertSchema = new Schema({
         type: Number,
         //required: true
     },
+    poster: {
+        type: String,
+        default: ''
+    },
     vendorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

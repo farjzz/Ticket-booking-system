@@ -31,26 +31,27 @@ const VendorDashboard = () => {
             }
             setIsLoading(false)
         }
+        if (!user) return;
         if (user.role == 'vendor') fetchEvents()
     }, [selectedCategory, user])
     return (
         <div className="home">
-            {user.role != 'vendor' && (
-                <p>Access denied.</p>
+
+            {(!user || user.role != 'vendor') && (
+                <p>Access denied</p>
             )}
-            {user.role == 'vendor' && (
+            {user && user.role == 'vendor' && (
                 <>
                     <VendorEventFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-                    <Link to='/create-event'>
-                        <button>Create New Event</button>
-                    </Link>
-                    <div className="events-list">
-                        {isLoading && <p>Loading events...</p>}
-                        {error && <p className="error">{error}</p>}
-                        {!isLoading && !error && events.length === 0 && <p>No events created yet.</p>}
-                        {events.map(e => (
-                            <VendorEventCard event={e} key={e._id} />
-                        ))}
+                    <div className="vendor-pg">
+                        <div className="vendor-events-list">
+                            {isLoading && <p>Loading events...</p>}
+                            {error && <p className="error">{error}</p>}
+                            {!isLoading && !error && events.length === 0 && <p>No events created yet.</p>}
+                            {events.map(e => (
+                                <VendorEventCard event={e} key={e._id} />
+                            ))}
+                        </div>
                     </div>
                 </>
             )}

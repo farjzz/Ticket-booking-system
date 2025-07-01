@@ -19,7 +19,10 @@ const movieSchema = new Schema({
         type: Number,
         required: true
     },
-    //add poster
+    poster: {
+        type: String,
+        default: ''
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Movie', movieSchema)

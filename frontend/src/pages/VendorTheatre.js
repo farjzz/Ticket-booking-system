@@ -102,42 +102,66 @@ const VendorTheatre = () => {
             if (!response.ok) {
                 throw Error(json.error)
             }
+            setShows(prev => prev.filter(s => s._id != showId))
         } catch (error) {
             setError(error.message)
         }
     }
     return (
-        <div className="theatre-details">
+        <div className="theatre-detailss">
             {isLoading && <p>Loading...</p>}
             {error && <p className="error">{error}</p>}
             {theatre && (
                 <div className="theatre">
-                    <h3>{theatre.theatre_name}</h3>
-                    <p>{theatre.location}</p>
-                    <p>Total Seats: {theatre.seatsTotal}</p>
-                    <button onClick={() => deleteTheatre}>Delete Theatre</button>
+                    <div className="theatre-details">
+                        <div className="theatre-name">
+                            <h3>{theatre.theatre_name}</h3>
+                            <span onClick={() => deleteTheatre()} className="material-symbols-outlined del">delete</span>
+                        </div>
+                        <p>{theatre.location}</p>
+                        <p>Total Seats: {theatre.seatsTotal}</p>
+                    </div>
                     {deleted && <p>Theatre and all shows associated with it was deleted!</p>}
                 </div>
             )}
-            {!isLoading && movies.map(m => (
-                <div className="movie">
-                    <h4>{m.name}</h4>
-                    <p>Genre: {m.genre}</p>
-                    <p>Language: {m.language}</p>
-                    <p>Description: {m.description}</p>
-                    <p>Duration: {m.durationInMins} mins</p>
-                    {shows[m._id]?.map(s => (
-                        <div className="show">
-                            <p>Date: {new Date(s.date).toLocaleDateString()}</p>
-                            <p>Show time: {s.time}</p>
-                            <p>Price: ₹{s.price}</p>
-                            <p>Seats booked: {theatre.seatsTotal - s.seatsAvailable}</p>
-                            <p>Seats left: {s.seatsAvailable}</p>
-                            <button onClick={() => deleteShow(s._id)}>Delete Show</button>
-                        </div>
-                    ))}
-                </div>
-            ))}
+            {!isLoading && movies.length == 0 && <p>No movies screened</p>}
+            {movies.length != 0 && (
+                <>
+                    <h3>Movies Screened</h3>
+                    <div className="movie">
+                        {!isLoading && movies.map(m => (
+                            <div className="moviee">
+                                <div className="the-movie">
+                                    <img src={m.poster} alt="movie-poster" />
+                                    <div className="movie-info">
+                                        <h4>{m.name}</h4>
+                                        <p><em>Genre:</em> {m.genre}</p>
+                                        <p><em>Language:</em> {m.language}</p>
+                                        <p><em>Description:</em> {m.description}</p>
+                                        <p><em>Duration:</em> {m.durationInMins} mins</p>
+                                    </div>
+                                </div>
+                                <h3>Shows available</h3>
+                                <div className="shows">
+                                    {shows[m._id]?.map(s => (
+                                        <div className="show-card">
+                                            <div className="show">
+                                                <p><em>Date:</em> {new Date(s.date).toLocaleDateString()}</p>
+                                                <p><em>Time:</em> {s.time}</p>
+                                                <p><em>Price:</em> ₹{s.price}</p>
+                                                <p><em>Seats booked:</em> {theatre.seatsTotal - s.seatsAvailable}</p>
+                                                <p><em>Seats left:</em> {s.seatsAvailable}</p>
+                                            </div>
+                                            <span onClick={() => deleteShow(s._id)} className="material-symbols-outlined del-icon">delete</span>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     )
 }

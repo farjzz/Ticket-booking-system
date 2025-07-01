@@ -8,8 +8,6 @@ const Event = () => {
     const { user } = useAuthContext()
     const [event, setEvent] = useState(null)
     const [error, setError] = useState(null)
-    const [seats, setSeats] = useState(1)
-    const [trainClass, setTrainClass] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
         const fetchEvent = async () => {
@@ -37,7 +35,7 @@ const Event = () => {
         <div className="event-details-pg">
             {event.eventType == 'Show' && (
                 <div className="movie-details">
-                    <img src={`/uploads/${event.poster}`} alt={event.name} />
+                    <img src={event.poster} alt={event.name} />
                     <div className="details">
                         <h2>{event.name}</h2>
                         <p>
@@ -51,22 +49,23 @@ const Event = () => {
                 </div>
             )}
             {event.eventType == 'Concert' && (
-                <>
-                    <img src={`/uploads/${event.poster}`} alt={event.name} />
+                <div className="concert-details">
+                    <img src={event.poster} alt={event.name} />
                     <div className="details">
                         <h2>{event.name}</h2>
-                        <p>{event.artist} · {event.genre}</p>
-                        <p>{new Date(event.date).toLocaleDateString()} {event.time}</p>
-                        <p>{event.language}</p>
-                        <p>{event.venue},{event.location}</p>
-                        <p>Seats left: {event.seatsAvailable}</p>
-                        <p>Price: ₹{event.price}</p>
-                        <p>{event.description}</p>
+                        <p><em>On:</em> {new Date(event.date).toDateString()}</p>
+                        <p><em>At:</em> {event.time}</p>
+                        <p><em>Artist:</em> {event.artist}</p>
+                        <p><em>Genre:</em> {event.genre}</p>
+                        <p><em>Venue:</em> {event.venue}, {event.location}</p>
+                        <p><em>Seats left:</em> {event.seatsAvailable}</p>
+                        <p><em>Price:</em> ₹{event.price}</p>
+                        <p><em>Description:</em> {event.description}</p>
                         <button className="book-btn" onClick={() => navigate(`/bookconcert/${event._id}`, {
                             state: { event }
                         })}>Proceed to booking</button>
                     </div>
-                </>
+                </div>
             )}
             {event.eventType == 'TrainClass' && (
                 <div className="train-details">

@@ -35,11 +35,11 @@ function App() {
             />
             <Route
               path="/login"
-              element={!user ? <Login /> : <Navigate to="/" />}
+              element={!user ? <Login /> : user.role == 'user' ? <Navigate to="/" /> : <Navigate to="/vendor" />}
             />
             <Route
               path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/" />}
+              element={!user ? <Signup /> : user.role == 'user' ? <Navigate to="/" /> : <Navigate to="/vendor" />}
             />
             <Route
               path="/events/:id"

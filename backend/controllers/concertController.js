@@ -3,6 +3,7 @@ const Concert = require('../models/concertModel')
 
 const createConcert = async (req, res) => {
     const { name, artist, genre, language, description, date, time, venue, location, price, seatsTotal } = req.body
+    const poster = req.file ? `/uploads/${req.file.filename}` : undefined
     if (req.user.role != 'vendor') {
         return res.status(403).json({ error: 'Access denied' })
     }
@@ -20,7 +21,7 @@ const createConcert = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
     try {
-        const concert = await Concert.create({ name, artist, genre, language, description, date, time, venue, location, price, seatsTotal, seatsAvailable: seatsTotal, vendorId: req.user._id })
+        const concert = await Concert.create({ name, artist, genre, language, description, date, time, venue, location, price, seatsTotal, seatsAvailable: seatsTotal, vendorId: req.user._id, poster })
         res.status(201).json(concert)
     } catch (error) {
         res.status(400).json({ error: error.message })

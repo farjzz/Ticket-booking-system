@@ -1,24 +1,9 @@
-import { useState } from "react";
-import { FaFilter } from 'react-icons/fa'
-
 const VendorEventFilter = ({ selectedCategory, setSelectedCategory }) => {
-    const [filters, setFilters] = useState(false)
     const handleClick = (c) => {
         setSelectedCategory(c)
-        setFilters(false)
     }
     return (
         <div className="event-filter">
-            <div className="filter">
-                <FaFilter className="filter-icon" onClick={() => setFilters(prev => !prev)} />
-            </div>
-            {filters && (
-                <div className="filter-dropdown">
-                    <p onClick={() => handleClick('Theatre')}>Theatres</p>
-                    <p onClick={() => handleClick('Concert')}>Concerts</p>
-                    <p onClick={() => handleClick('Train')}>Trains</p>
-                </div>
-            )}
             <div className="categories">
                 <span className={selectedCategory == 'Theatre' ? 'active' : ''} onClick={() => handleClick('Theatre')}>
                     Theatres
@@ -29,9 +14,9 @@ const VendorEventFilter = ({ selectedCategory, setSelectedCategory }) => {
                 <span className={selectedCategory == 'Train' ? 'active' : ''} onClick={() => handleClick('Train')}>
                     Trains
                 </span>
+                <button onClick={() => handleClick('')} className="filters-btn" disabled={!selectedCategory}>Clear filters</button>
             </div>
-            {selectedCategory && <button onClick={() => handleClick('')}>Clear filters</button>}
-        </div>
+        </div >
     )
 }
 

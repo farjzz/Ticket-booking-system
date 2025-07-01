@@ -35,15 +35,21 @@ const CreateTheatreForm = () => {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Add a New Theatre</h2>
-            <label>Theatre Name:</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-            <label>Location:</label>
-            <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
-            <label>Total seats:</label>
-            <input type="number" value={seatsTotal} onChange={(e) => setSeatsTotal(e.target.value)} required />
-            <button type="submit">Create Theatre</button>
+        <form onSubmit={handleSubmit} className="create-event">
+            <h3>Add a New Theatre</h3>
+            <div className="entry">
+                <label>Theatre Name:</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Location:</label>
+                <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Total seats:</label>
+                <input type="number" value={seatsTotal} onChange={(e) => setSeatsTotal(e.target.value)} required />
+            </div>
+            <button type="submit" className="btn">Create Theatre</button>
             {error && <p className="error">{error}</p>}
             {success && (
                 <>

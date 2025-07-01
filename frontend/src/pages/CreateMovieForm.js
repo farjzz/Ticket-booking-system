@@ -9,6 +9,7 @@ const CreateMovieForm = () => {
     const [language, setLanguage] = useState('')
     const [description, setDescription] = useState('')
     const [durationInMins, setDurationInMins] = useState('')
+    const [poster, setPoster] = useState(null)
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
     const handleSubmit = async (e) => {
@@ -16,13 +17,19 @@ const CreateMovieForm = () => {
         setError(null)
         setSuccess(false)
         try {
+            const formData = new FormData()
+            formData.append('name', name)
+            formData.append('genre', genre)
+            formData.append('language', language)
+            formData.append('description', description)
+            formData.append('durationInMins', Number(durationInMins))
+            if (poster) formData.append('poster', poster)
             const response = await fetch('/api/movies', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ name, genre, language, description, durationInMins: Number(durationInMins) })
+                body: formData
             })
             const json = await response.json()
             if (!response.ok) {
@@ -39,19 +46,33 @@ const CreateMovieForm = () => {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Add a New Movie</h2>
-            <label>Movie Name:</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-            <label>Genre:</label>
-            <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} required />
-            <label>Language:</label>
-            <input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} required />
-            <label>Description:</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-            <label>Duration (in mins):</label>
-            <input type="number" value={durationInMins} onChange={(e) => setDurationInMins(e.target.value)} required />
-            <button type="submit">Create Movie</button>
+        <form onSubmit={handleSubmit} className='create-event'>
+            <h3>Add a New Movie</h3>
+            <div className="entry">
+                <label>Movie Name:</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Genre:</label>
+                <input type="text" value={genre} onChange={(e) => setGenre(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Language:</label>
+                <input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Duration (in mins):</label>
+                <input type="number" value={durationInMins} onChange={(e) => setDurationInMins(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Description:</label>
+                <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Upload Movie Poster:</label>
+                <input type="file" onChange={(e) => setPoster(e.target.files[0])} />
+            </div>
+            <button type="submit" className="btn">Create Movie</button>
             {error && <p className="error">{error}</p>}
             {success && (
                 <>

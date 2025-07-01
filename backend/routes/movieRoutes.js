@@ -1,9 +1,10 @@
 const { createMovie, deleteMovie, getMovie } = require('../controllers/movieController')
+const upload = require('../middleware/upload')
 const express = require('express')
 const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
 router.use(requireAuth)
-router.post('/', createMovie)
+router.post('/', upload.single('poster'), createMovie)
 router.delete('/:id', deleteMovie)
 router.get('/:id', getMovie)
 module.exports = router

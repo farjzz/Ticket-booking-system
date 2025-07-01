@@ -45,25 +45,41 @@ const CreateTrainForm = () => {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Add a New Train</h2>
-            <label>Train Number:</label>
-            <input type="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
-            <label>Train Name:</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-            <label>Source:</label>
-            <input type="text" value={source} onChange={(e) => setSource(e.target.value)} required />
-            <label>Destination:</label>
-            <input type="text" value={destination} onChange={(e) => setDestination(e.target.value)} required />
-            <label>Date of Departure:</label>
-            <input type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} required />
-            <label>Time of Departure:</label>
-            <input type="time" value={departureTime} onChange={(e) => setDepartureTime(e.target.value)} required />
-            <label>Date of Arrival:</label>
-            <input type="date" value={arrivalDate} onChange={(e) => setArrivalDate(e.target.value)} required />
-            <label>Time of Arrival:</label>
-            <input type="time" value={arrivalTime} onChange={(e) => setArrivalTime(e.target.value)} required />
-            <button type="submit">Create Train</button>
+        <form onSubmit={handleSubmit} className="create-event">
+            <h3>Add a New Train</h3>
+            <div className="entry">
+                <label>Train Number:</label>
+                <input type="number" value={number} onChange={(e) => setNumber(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Train Name:</label>
+                <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Source:</label>
+                <input type="text" value={source} onChange={(e) => setSource(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Destination:</label>
+                <input type="text" value={destination} onChange={(e) => setDestination(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Date of Departure:</label>
+                <input type="date" value={departureDate} onChange={(e) => setDepartureDate(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Time of Departure:</label>
+                <input type="time" value={departureTime} onChange={(e) => setDepartureTime(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Date of Arrival:</label>
+                <input type="date" value={arrivalDate} onChange={(e) => setArrivalDate(e.target.value)} required />
+            </div>
+            <div className="entry">
+                <label>Time of Arrival:</label>
+                <input type="time" value={arrivalTime} onChange={(e) => setArrivalTime(e.target.value)} required />
+            </div>
+            <button type="submit" className="btn">Create Train</button>
             {error && <p className="error">{error}</p>}
             {success && (
                 <>

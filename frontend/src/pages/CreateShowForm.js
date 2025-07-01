@@ -80,8 +80,8 @@ const CreateShowForm = () => {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
-            {theatres.length == 0 && <p>No theatres available</p>}
+        <form onSubmit={handleSubmit} className="create-show">
+            {!isLoading && theatres.length == 0 && <p>No theatres available</p>}
             <select value={selectedTheatre} onChange={(e) => setSelectedTheatre(e.target.value)}>
                 <option value="">--- Select a Theatre ---</option>
                 {theatres.map(t => (
@@ -100,15 +100,21 @@ const CreateShowForm = () => {
                 </div>
             )}
             {selectedMovie && (
-                <div>
-                    <h2>Add a New Show</h2>
-                    <label>Date:</label>
-                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
-                    <label>Time:</label>
-                    <input type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
-                    <label>Price (in rupees):</label>
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
-                    <button type="submit">Create Show</button>
+                <div className="create-event">
+                    <h3>Add a New Show</h3>
+                    <div className="entry">
+                        <label>Date:</label>
+                        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+                    </div>
+                    <div className="entry">
+                        <label>Time:</label>
+                        <input type="time" value={time} onChange={(e) => setTime(e.target.value)} required />
+                    </div>
+                    <div className="entry">
+                        <label>Price (in rupees):</label>
+                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
+                    </div>
+                    <button type="submit" className="btn">Create Show</button>
                     {success && (
                         <>
                             <p className="success">Show was created successfully!</p>

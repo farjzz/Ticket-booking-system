@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 const EventCard = ({ event }) => {
     return (
         //<Link to={`/vendor-event/${event._id}`} className='event-link'>
-        <div className="event-card">
+        <div className="vendor-event-card">
             {event.eventType == 'Theatre' && (
                 <Link to={`/vendor-theatre/${event._id}`}>
                     <div className="theatre-card">
@@ -16,7 +16,7 @@ const EventCard = ({ event }) => {
             {event.eventType == 'Concert' && (
                 <Link to={`/vendor-concert/${event._id}`}>
                     <div className="concert-card">
-                        <img src="{`/uploads/${event.poster}`}" alt="concert-poster" />
+                        <img src={event.poster} alt="concert-poster" />
                         <div className="event-details">
                             <h3>{event.name}</h3>
                             <p>{event.artist}</p>

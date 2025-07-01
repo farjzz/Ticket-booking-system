@@ -26,8 +26,8 @@ const Navbar = () => {
                 <Link to='/' className="logo">BookItAll</Link>
             </div>
             <div className="nav-right">
-                {user && user.role == 'vendor' && (
-                    <Link to='/create-event' className='create-link'>Create New Event</Link>
+                {user && user == 'vendor' && (
+                    <Link to='/create-event' className='nav-link'>Create New Event</Link>
                 )}
                 {!user && (
                     <div className="log-sign">

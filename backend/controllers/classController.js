@@ -14,7 +14,7 @@ const createClass = async (req, res) => {
         return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
     try {
-        const classs = await TrainClass.create({ train, classType, price, seatsAvailable: seatsTotal, seatsTotal })
+        const classs = await TrainClass.create({ train, classType, price, seatsAvailable: seatsTotal, seatsTotal, vendorId: req.user._id })
         res.status(201).json(classs)
     } catch (error) {
         res.status(400).json({ error: error.message })
