@@ -406,6 +406,10 @@ textarea:focus {
   gap: 1rem;
 }
 
+.edit-form {
+  margin-top: 3rem;
+}
+
 .change-pass-form,
 .edit-form {
   max-width: 25rem;

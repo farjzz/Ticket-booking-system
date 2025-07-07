@@ -1,5 +1,8 @@
 require("dotenv").config()
 const express = require('express')
+const http = require('http')
+const socketio = require('socket.io')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const path = require('path')
 const userRoutes = require('./routes/user')
@@ -28,6 +31,14 @@ app.use('/api/shows', showRoutes)
 app.use('/api/class', classRoutes)
 app.use('/api/vendor', vendorRoutes)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+const server = http.createServer(app)
+const io = socketio(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST']
+    }
+})
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(process.env.PORT, () => {
