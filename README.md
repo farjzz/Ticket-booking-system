@@ -1,6 +1,6 @@
 # Universal Ticket Booking System
 
-A **full-stack MERN application** that provides a **single unified platform** for booking various types of tickets including movies, concerts, and trains 
+A **full-stack MERN application** that provides a **single unified platform** for booking various types of tickets including movies, concerts, and trains. 
 
 The system supports **user authentication, event listings, booking management, forgot password functionality, personal profile with means to view and cancel bookings** 
 It also provides **role-based dashboards** for **users and vendors**
@@ -30,5 +30,5 @@ It also provides **role-based dashboards** for **users and vendors**
 - **Database**: MongoDB
 
 **Watch demo video**
-https://github.com/farjzz/Ticket-booking-system/blob/master/Demo%20vid.mp4
+https://github.com/farjzz/Ticket-booking-system/blob/master/Demo%20vid.mp4  
 Click on the above link and download the demo video
