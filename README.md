@@ -29,6 +29,6 @@ It also provides **role-based dashboards** for **users and vendors**
 - **Backend**: Node.js + Express.js
 - **Database**: MongoDB
 
-**Watch demo video**
+### Watch demo video
 https://github.com/farjzz/Ticket-booking-system/blob/master/Demo%20vid.mp4  
 Click on the above link and download the demo video
